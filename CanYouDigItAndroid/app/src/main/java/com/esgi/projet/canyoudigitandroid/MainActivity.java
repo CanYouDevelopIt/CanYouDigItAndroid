@@ -12,6 +12,7 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 
+    private BlocNotes monBlocNotes;
     Button buttonAjouter;
 
     @Override
@@ -19,6 +20,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        monBlocNotes = new BlocNotes();
         buttonAjouter = (Button) findViewById(R.id.ajouterNote);
 
     }
