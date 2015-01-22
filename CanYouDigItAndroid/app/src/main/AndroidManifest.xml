@@ -20,6 +20,10 @@
             android:name=".NoteActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".ParametrageActivity"
+            android:label="@string/title_activity_parametrage" >
+        </activity>
     </application>
 
 </manifest>
