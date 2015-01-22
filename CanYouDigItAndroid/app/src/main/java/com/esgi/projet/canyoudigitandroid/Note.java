@@ -2,6 +2,9 @@ package com.esgi.projet.canyoudigitandroid;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.format.Time;
+
+import java.util.Date;
 
 /**
  * Created by Jkn1092 on 22/01/2015.
@@ -16,10 +19,14 @@ public class Note implements Parcelable {
     private String groupeNotes;
 
     public Note(String _titre, String _contenu, int _niveauImportance, String _groupeNotes) {
+        Time now = new Time();
+        now.setToNow();
+
         titre = _titre;
         contenu = _contenu;
         niveauImportance = _niveauImportance;
         groupeNotes = _groupeNotes;
+        dateModif = now.toString();
     }
 
     public Note(Parcel in) {
@@ -27,6 +34,7 @@ public class Note implements Parcelable {
         contenu = in.readString();
         niveauImportance = in.readInt();
         groupeNotes = in.readString();
+
     }
 
     public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>()
