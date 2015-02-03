@@ -19,7 +19,7 @@ import org.w3c.dom.Text;
 public class MainActivity extends Activity {
 
     static final String STATE_BLOC_NOTES = "STATE_BLOC_NOTES";
-    private BlocNotes monBlocNotes = new BlocNotes();
+    private BlocNotes monBlocNotes;
     Button buttonAjouter;
     TableLayout tableLayoutNotes;
 
@@ -30,8 +30,10 @@ public class MainActivity extends Activity {
         if(savedInstanceState != null){
             monBlocNotes = savedInstanceState.getParcelable(STATE_BLOC_NOTES);
             Log.v("TAG","Ancien");
-        }else {
-            Log.v("TAG","NEw");
+        }
+
+        if(monBlocNotes == null){
+            Log.v("Blocnote","null");
             monBlocNotes = new BlocNotes();
         }
 
@@ -50,9 +52,6 @@ public class MainActivity extends Activity {
         }
 
         for(Note n: monBlocNotes.getMesNotes()){
-
-            Log.v("Note : ", n.getTitre());
-
             TableRow row = new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
@@ -61,27 +60,52 @@ public class MainActivity extends Activity {
             textTitreNote.setText(n.getTitre() + " " + n.getDateModif());
             row.addView(textTitreNote);
             tableLayoutNotes.addView(row,lp);
-
         }
 
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onResume() {
+        Log.v("onResume","Resume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.v("onRestart","Restart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.v("onStop","Stop");
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.v("onStart","Start");
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         Log.v("onSaveInstanceState","Mais j'ai save ce foutu bloc notes");
         savedInstanceState.putParcelable(STATE_BLOC_NOTES, monBlocNotes);
+
+        if(savedInstanceState.getParcelable(STATE_BLOC_NOTES) == null){
+            Log.v("onSaveInstanceState","NULL");
+        }else{
+            Log.v("onSaveInstanceState","PAS NULL");
+
+        }
+
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.v("onRestoreInstanceState","Je restaure !!!!!!!");
         monBlocNotes = savedInstanceState.getParcelable(STATE_BLOC_NOTES);
 
         for(Note n: monBlocNotes.getMesNotes()){
@@ -96,13 +120,13 @@ public class MainActivity extends Activity {
             tableLayoutNotes.addView(row,lp);
 
         }
+
+        Log.v("onRestoreInstanceState","Je restaure !!!!!!!");
     }
 
-    public void ajouterUneNote(View v){
-        Log.v("TAG","Bundle");
-        Bundle b = new Bundle();
-        onSaveInstanceState(b);
 
+
+    public void ajouterUneNote(View v){
         Intent intent = new Intent(this,NoteActivity.class);
         startActivity(intent);
     }
