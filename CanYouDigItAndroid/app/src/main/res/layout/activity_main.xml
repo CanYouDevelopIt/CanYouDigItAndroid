@@ -23,24 +23,22 @@
         android:layout_alignParentEnd="true"
         android:onClick="ajouterUneNote"/>
 
-    <TableRow
-        android:id="@+id/tableNote"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ajouterNote">
-
-    </TableRow>
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rechercheNote"
         android:hint="Rechercher une note"
         android:layout_weight="1"
-        android:layout_above="@+id/tableNote"
+        android:layout_alignBottom="@+id/ajouterNote"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TableLayout
+        android:id="@+id/tableNote"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/ajouterNote"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></TableLayout>
 
 </RelativeLayout>

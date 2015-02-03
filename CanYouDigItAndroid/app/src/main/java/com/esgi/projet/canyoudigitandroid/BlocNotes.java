@@ -1,21 +1,34 @@
 package com.esgi.projet.canyoudigitandroid;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Jkn1092 on 22/01/2015.
  */
-public class BlocNotes {
+public class BlocNotes implements Parcelable {
 
     private List<Note> mesNotes;
     private List<Note> mesArchives;
-    private List<String> mesGroupeNotes;
+    private List<String> mesGroupesNotes;
 
     public BlocNotes() {
         mesNotes = new ArrayList<Note>();
         mesArchives = new ArrayList<Note>();
-        mesGroupeNotes = new ArrayList<String>();
+        mesGroupesNotes = new ArrayList<String>();
+    }
+
+    public BlocNotes(Parcel in) {
+
+        mesNotes = new ArrayList<Note>();
+        mesArchives = new ArrayList<Note>();
+        mesGroupesNotes = new ArrayList<String>();
+
+        in.readTypedList(mesNotes, Note.CREATOR);
+        in.readTypedList(mesArchives, Note.CREATOR);
+        in.readStringList(mesGroupesNotes);
     }
 
     public List<Note> getMesNotes() {
@@ -26,12 +39,12 @@ public class BlocNotes {
         this.mesNotes = mesNotes;
     }
 
-    public List<String> getGroupeNotes() {
-        return mesGroupeNotes;
+    public List<String> getMesGroupesNotes() {
+        return mesGroupesNotes;
     }
 
-    public void setGroupeNotes(List<String> groupeNotes) {
-        this.mesGroupeNotes = groupeNotes;
+    public void setMesGroupesNotes(List<String> groupesNotes) {
+        this.mesGroupesNotes = groupesNotes;
     }
 
     public void ajouterNote(Note uneNote){
@@ -60,13 +73,13 @@ public class BlocNotes {
     }
 
     public void ajouterGroupeNotes(String nomGroupe){
-        if(!mesGroupeNotes.contains(nomGroupe)) {
-            mesGroupeNotes.add(nomGroupe);
+        if(!mesGroupesNotes.contains(nomGroupe)) {
+            mesGroupesNotes.add(nomGroupe);
         }
     }
 
     public void supprimerGroupeNotes(String nomGroupe){
-        mesGroupeNotes.remove(nomGroupe);
+        mesGroupesNotes.remove(nomGroupe);
 
         for(Note n: mesNotes){
             if(n.getGroupeNotes().equals(nomGroupe)){
@@ -80,5 +93,34 @@ public class BlocNotes {
             }
         }
     }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeTypedList(mesNotes);
+        dest.writeTypedList(mesArchives);
+        dest.writeStringList(mesGroupesNotes);
+    }
+
+    public static final Parcelable.Creator<BlocNotes> CREATOR = new Parcelable.Creator<BlocNotes>()
+    {
+        @Override
+        public BlocNotes createFromParcel(Parcel source)
+        {
+            return new BlocNotes(source);
+        }
+
+        @Override
+        public BlocNotes[] newArray(int size)
+        {
+            return new BlocNotes[size];
+        }
+    };
 
 }

@@ -37,21 +37,6 @@ public class Note implements Parcelable {
 
     }
 
-    public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>()
-    {
-        @Override
-        public Note createFromParcel(Parcel source)
-        {
-            return new Note(source);
-        }
-
-        @Override
-        public Note[] newArray(int size)
-        {
-            return new Note[size];
-        }
-    };
-
     public String getTitre() {
         return titre;
     }
@@ -117,4 +102,22 @@ public class Note implements Parcelable {
         dest.writeString(groupeNotes);
 
     }
+
+    public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>()
+    {
+        @Override
+        public Note createFromParcel(Parcel source)
+        {
+            return new Note(source);
+        }
+
+        @Override
+        public Note[] newArray(int size)
+        {
+            return new Note[size];
+        }
+    };
+
+
+
 }

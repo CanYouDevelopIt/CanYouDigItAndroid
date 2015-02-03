@@ -10,14 +10,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/" />
+        android:id="@+id/titreParametrages" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Créer un groupe de notes :"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/"
+        android:id="@+id/textCreerGroupeNotes"
+        android:layout_below="@+id/titreParametrages"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="54dp" />
@@ -25,8 +25,8 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_below="@+id/textView2"
+        android:id="@+id/ajouteGroupe"
+        android:layout_below="@+id/textCreerGroupeNotes"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="43dp"
@@ -35,9 +35,10 @@
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/ajouteGroupe"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"></TableLayout>
+        android:layout_alignParentEnd="true"
+        android:id="@+id/tabGroupes"></TableLayout>
 
 </RelativeLayout>
