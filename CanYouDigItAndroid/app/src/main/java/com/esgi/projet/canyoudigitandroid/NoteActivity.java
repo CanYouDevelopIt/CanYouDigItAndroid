@@ -1,12 +1,8 @@
 package com.esgi.projet.canyoudigitandroid;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -33,6 +29,7 @@ public class NoteActivity extends Activity {
         String[] niveauImportance = new String[] {"Très important","Important","Normal"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, niveauImportance);
         importance.setAdapter(adapter);
+
 
     }
 
