@@ -33,11 +33,12 @@
         android:layout_alignRight="@+id/contenuNote"
         android:layout_alignEnd="@+id/contenuNote" />
 
-    <ListView
-        android:id="@+id/importanceNote"
+    <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/contenuNote"
-        android:layout_alignLeft="@+id/contenuNote"/>
+        android:id="@+id/spinner"
+        android:layout_below="@+id/dateNote"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
