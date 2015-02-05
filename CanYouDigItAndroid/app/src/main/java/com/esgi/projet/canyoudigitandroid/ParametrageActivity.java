@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 public class ParametrageActivity extends Activity {
 
-    BlocNotes monBlocNotes;
+    public BlocNotes monBlocNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class ParametrageActivity extends Activity {
         setContentView(R.layout.activity_parametrage);
 
         Intent i = getIntent();
-        monBlocNotes = (BlocNotes) i.getParcelableExtra("BlocNotes");
+        monBlocNotes = (BlocNotes) i.getParcelableExtra("monBlocNotes");
 
         if(monBlocNotes == null){
             Log.v("PARAMETRAGE","NULL y'a un problème ça doit pas etre null et ça marche normalement j'ai testé !");

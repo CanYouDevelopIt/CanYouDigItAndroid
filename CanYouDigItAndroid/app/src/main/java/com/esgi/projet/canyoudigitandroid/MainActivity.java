@@ -20,10 +20,11 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends Activity {
 
-    static final String STATE_BLOC_NOTES = "STATE_BLOC_NOTES";
-    static final String STATE_RECHERCHE = "RECHERCHE";
-    BlocNotes monBlocNotes;
-    EditText editTexteRechercheNotes;
+    private static final String TAG = "MainActivity";
+    private static final String STATE_BLOC_NOTES = "STATE_BLOC_NOTES";
+    private static final String STATE_RECHERCHE = "RECHERCHE";
+    public BlocNotes monBlocNotes;
+    public EditText editTexteRechercheNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +38,18 @@ public class MainActivity extends Activity {
         if(savedInstanceState != null){
             monBlocNotes = (BlocNotes)savedInstanceState.getParcelable(STATE_BLOC_NOTES);
             editTexteRechercheNotes.setText(savedInstanceState.getString(STATE_RECHERCHE));
-        }else{
+        }
+
+        if(getIntent().hasExtra("monBlocNotes")){
+            monBlocNotes = (BlocNotes)getIntent().getParcelableExtra("monBlocNotes");
+        }
+
+        if(monBlocNotes == null){
             monBlocNotes = new BlocNotes();
         }
 
         if(getIntent().hasExtra("nouvelleNote")) {
-            Note nouvelleNote = getIntent().getParcelableExtra("nouvelleNote");
+            Note nouvelleNote = (Note)getIntent().getParcelableExtra("nouvelleNote");
             monBlocNotes.ajouterNote(nouvelleNote);
         }
 
@@ -76,12 +83,13 @@ public class MainActivity extends Activity {
 
     public void ajouterUneNote(View v){
         Intent intent = new Intent(this,NoteActivity.class);
+        intent.putExtra("monBlocNotes",(Parcelable)monBlocNotes);
         startActivity(intent);
     }
 
     public void parametrerGroupes(View v){
         Intent intent = new Intent(this,ParametrageActivity.class);
-        intent.putExtra("BlocNotes",(Parcelable)monBlocNotes);
+        intent.putExtra("monBlocNotes",(Parcelable)monBlocNotes);
         startActivity(intent);
     }
 
