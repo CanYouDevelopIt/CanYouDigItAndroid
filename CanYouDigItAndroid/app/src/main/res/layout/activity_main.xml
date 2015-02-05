@@ -41,4 +41,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"></TableLayout>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="P"
+        android:id="@+id/parametreGroupes"
+        android:onClick="parametrerGroupes"
+        android:layout_above="@+id/tableNote"
+        android:layout_toLeftOf="@+id/ajouterNote"
+        android:layout_toStartOf="@+id/ajouterNote" />
+
 </RelativeLayout>
