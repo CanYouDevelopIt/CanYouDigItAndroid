@@ -18,7 +18,7 @@ public class Note implements Parcelable {
     private String dateModif;
     private String groupeNotes;
 
-    public Note(String _titre, String _contenu, int _niveauImportance, String _groupeNotes) {
+    public Note(String _titre, String _contenu, int _niveauImportance, String _date, String _groupeNotes) {
         Time now = new Time();
         now.setToNow();
 
@@ -26,7 +26,7 @@ public class Note implements Parcelable {
         contenu = _contenu;
         niveauImportance = _niveauImportance;
         groupeNotes = _groupeNotes;
-        dateModif = now.toString();
+        dateModif = _date;
     }
 
     public Note(Parcel in) {
