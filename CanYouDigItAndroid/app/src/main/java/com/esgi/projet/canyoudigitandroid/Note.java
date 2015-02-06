@@ -18,6 +18,7 @@ public class Note implements Parcelable {
     private int niveauImportance;
     private String dateModif;
     private String groupeNotes;
+    private boolean archive;
 
     public Note(String _titre, String _contenu, int _niveauImportance, String _date, String _groupeNotes) {
         Time now = new Time();
@@ -28,6 +29,7 @@ public class Note implements Parcelable {
         niveauImportance = _niveauImportance;
         groupeNotes = _groupeNotes;
         dateModif = _date;
+        archive = false;
     }
 
     public Note(Parcel in) {
@@ -76,6 +78,14 @@ public class Note implements Parcelable {
 
     public void setGroupeNotes(String groupeNotes) {
         this.groupeNotes = groupeNotes;
+    }
+
+    public boolean getArchive() {
+        return archive;
+    }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
     }
 
     public boolean equals(Object n){

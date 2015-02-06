@@ -25,6 +25,8 @@ public class NoteBDD {
     private static final int NUM_COL_DATE_MODIF = 4;
     private static final String COL_GROUPE = "groupe";
     private static final int NUM_COL_GROUPE = 5;
+    private static final String COL_ARCHIVE = "archive";
+    private static final int NUM_COL_ARCHIVE = 6;
 
     private SQLiteDatabase bdd;
 
@@ -49,7 +51,7 @@ public class NoteBDD {
         return bdd;
     }
 
-    public long insertLivre(Note n){
+    public long insertNote(Note n){
         //Création d'un ContentValues (fonctionne comme une HashMap)
         ContentValues values = new ContentValues();
         //on lui ajoute une valeur associé à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
@@ -58,11 +60,12 @@ public class NoteBDD {
         values.put(COL_NIVEAU_IMPORTANCE, n.getNiveauImportance());
         values.put(COL_DATE_MODIF, n.getDateModif());
         values.put(COL_GROUPE, n.getGroupeNotes());
+        values.put(COL_ARCHIVE, n.getArchive());
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(TABLE_NOTES, null, values);
     }
 
-    public int updateLivre(int id, Note n){
+    public int updateNote(int id, Note n){
         //La mise à jour d'un livre dans la BDD fonctionne plus ou moins comme une insertion
         //il faut simple préciser quelle livre on doit mettre à jour grâce à l'ID
         //ContentValues values = new ContentValues();
@@ -72,7 +75,7 @@ public class NoteBDD {
         return id;
     }
 
-    public int removeLivreWithID(int id){
+    public int removeNoteWithID(int id){
         //Suppression d'un livre de la BDD grâce à l'ID
         return bdd.delete(TABLE_NOTES, COL_ID + " = " +id, null);
     }

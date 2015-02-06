@@ -17,11 +17,12 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
     private static final String COL_NIVEAU_IMPORTANCE = "niveau_importance";
     private static final String COL_DATE_MODIF = "date_modif";
     private static final String COL_GROUPE = "groupe";
+    private static final String COL_ARCHIVE = "archive";
 
     private static final String CREATE_BDD = "CREATE TABLE " + TABLE_NOTES + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_TITRE + " TEXT NOT NULL, "
             + COL_CONTENU + " TEXT NOT NULL, " + COL_NIVEAU_IMPORTANCE + " INTEGER NOT NULL, "
-            + COL_DATE_MODIF + " TEXT NOT NULL, " + COL_GROUPE + " TEXT);";
+            + COL_DATE_MODIF + " TEXT NOT NULL, " + COL_GROUPE + " TEXT, " + COL_ARCHIVE + " BOOLEAN);";
 
     public MaBaseSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
