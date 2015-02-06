@@ -3,6 +3,7 @@ package com.esgi.projet.canyoudigitandroid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,11 +19,12 @@ import java.util.Date;
 
 public class NoteActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
-    EditText nomTitre;
-    EditText contenu;
-    TextView date;
-    Spinner importance;
-    String laDate;
+    public BlocNotes monBlocNotes;
+    public EditText nomTitre;
+    public EditText contenu;
+    public TextView date;
+    public Spinner importance;
+    public String laDate;
 
 
     @Override
@@ -34,6 +36,9 @@ public class NoteActivity extends Activity implements AdapterView.OnItemSelected
         contenu = (EditText) findViewById(R.id.contenuNote);
         date = (TextView) findViewById(R.id.dateNote);
         importance = (Spinner) findViewById(R.id.spinner);
+
+        monBlocNotes = (BlocNotes) getIntent().getParcelableExtra("monBlocNotes");
+
         Date theDate = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         laDate = sdf.format(theDate);
@@ -53,7 +58,8 @@ public class NoteActivity extends Activity implements AdapterView.OnItemSelected
         Note nouvelleNote = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,"");
         Log.v("ta mere la chienne", nouvelleNote.getDateModif());
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("nouvelleNote", nouvelleNote);
+        monBlocNotes.ajouterNote(nouvelleNote);
+        intent.putExtra("monBlocNotes",(Parcelable)monBlocNotes);
         startActivity(intent);
     }
 

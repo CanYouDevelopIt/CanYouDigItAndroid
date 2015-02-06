@@ -12,6 +12,7 @@ import java.util.Date;
 
 public class Note implements Parcelable {
 
+    private int id;
     private String titre;
     private String contenu;
     private int niveauImportance;
