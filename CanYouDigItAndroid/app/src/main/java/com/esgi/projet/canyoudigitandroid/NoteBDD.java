@@ -65,14 +65,17 @@ public class NoteBDD {
         return bdd.insert(TABLE_NOTES, null, values);
     }
 
-    public int updateNote(int id, Note n){
+    public int updateNote(Note n){
         //La mise à jour d'un livre dans la BDD fonctionne plus ou moins comme une insertion
         //il faut simple préciser quelle livre on doit mettre à jour grâce à l'ID
-        //ContentValues values = new ContentValues();
-        //values.put(COL_ISBN, livre.getIsbn());
-        //values.put(COL_TITRE, livre.getTitre());
-        //return bdd.update(TABLE_NOTES, values, COL_ID + " = " +id, null);
-        return id;
+        ContentValues values = new ContentValues();
+        values.put(COL_TITRE, n.getTitre());
+        values.put(COL_CONTENU, n.getContenu());
+        values.put(COL_NIVEAU_IMPORTANCE, n.getNiveauImportance());
+        values.put(COL_DATE_MODIF, n.getDateModif());
+        values.put(COL_GROUPE, n.getGroupeNotes());
+        values.put(COL_ARCHIVE, n.getArchive());
+        return bdd.update(TABLE_NOTES, values, COL_ID + " = " + n.getId(), null);
     }
 
     public int removeNoteWithID(int id){

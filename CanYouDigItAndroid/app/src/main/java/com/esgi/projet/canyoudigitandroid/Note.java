@@ -88,6 +88,10 @@ public class Note implements Parcelable {
         this.archive = archive;
     }
 
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id;  }
+
     public boolean equals(Object n){
         if(n instanceof Note){
             if(titre == ((Note) n).getTitre()){
