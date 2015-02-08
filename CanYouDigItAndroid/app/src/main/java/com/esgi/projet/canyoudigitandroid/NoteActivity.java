@@ -39,6 +39,8 @@ public class NoteActivity extends Activity implements AdapterView.OnItemSelected
 
         monBlocNotes = (BlocNotes) getIntent().getParcelableExtra("monBlocNotes");
 
+        monBlocNotes = new BlocNotes(this);
+
         Date theDate = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         laDate = sdf.format(theDate);

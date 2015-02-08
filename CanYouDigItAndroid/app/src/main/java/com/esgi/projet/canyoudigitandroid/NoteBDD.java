@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class NoteBDD {
     private static final String NOM_BDD = "notes.db";
 
     private static final String TABLE_NOTES = "table_notes";
-    private static final String COL_ID = "ID";
+    private static final String COL_ID = "id";
     private static final int NUM_COL_ID = 0;
     private static final String COL_TITRE = "titre";
     private static final int NUM_COL_TITRE = 1;
@@ -84,16 +85,22 @@ public class NoteBDD {
 
     public int removeNoteWithID(int id){
         //Suppression d'un livre de la BDD grâce à l'ID
-        return bdd.delete(TABLE_NOTES, COL_ID + " = " +id, null);
+        return bdd.delete(TABLE_NOTES, COL_ID + " = " + id, null);
     }
 
     public List<Note> getMesNotes(Boolean archive){
-
         List<Note> mesNotes = new ArrayList<Note>();
 
+        int archiveValue;
+        if(archive == false){
+        archiveValue = 0;
+        }else{
+        archiveValue = 1;
+        }
+        
         open();
         String[] listeColonnes ={COL_ID,COL_TITRE,COL_CONTENU,COL_NIVEAU_IMPORTANCE,COL_DATE_MODIF,COL_GROUPE};
-        Cursor cursor = bdd.query(TABLE_NOTES,listeColonnes,null,null,null,null,null);
+        Cursor cursor = bdd.query(TABLE_NOTES,listeColonnes,COL_ARCHIVE+"= "+archiveValue,null,null,null,null);
 
         while(cursor.moveToNext()){
 
