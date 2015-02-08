@@ -61,12 +61,8 @@ public class BlocNotes implements Parcelable {
     }
 
     public void supprimerNote(Note uneNote){
-        for(Note n: mesNotes){
-           if(n.equals(uneNote)){
-               mesNotes.remove(n);
-               nbdd.removeNoteWithID(n.getId());
-           }
-        }
+        mesNotes.remove(uneNote);
+        nbdd.removeNoteWithID(uneNote.getId());
     }
 
     public Note getNoteById(int idNote){
