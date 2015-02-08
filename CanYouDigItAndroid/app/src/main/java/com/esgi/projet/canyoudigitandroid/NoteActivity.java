@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class NoteActivity extends Activity implements AdapterView.OnItemSelectedListener {
+public class NoteActivity extends Activity{
 
     public BlocNotes monBlocNotes;
     public EditText nomTitre;
@@ -25,7 +25,7 @@ public class NoteActivity extends Activity implements AdapterView.OnItemSelected
     public TextView date;
     public Spinner importance;
     public String laDate;
-
+    public Note noteActuelle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +46,11 @@ public class NoteActivity extends Activity implements AdapterView.OnItemSelected
 
         if(getIntent().hasExtra("idNote")){
 
-            int idNote = getIntent().getIntExtra("idNote",-1);
-            Note noteActuelle = monBlocNotes.getNoteById(idNote);
-
+            int idNote = getIntent().getIntExtra("idNote", -1);
+            noteActuelle = monBlocNotes.getNoteById(idNote);
             nomTitre.setText(noteActuelle.getTitre());
             contenu.setText(noteActuelle.getContenu());
-
+            importance.setSelection(noteActuelle.getNiveauImportance());
             laDate = noteActuelle.getDateModif();
 
         }else{
@@ -67,19 +66,18 @@ public class NoteActivity extends Activity implements AdapterView.OnItemSelected
     }
 
     public void onBackPressed() {
-        Note nouvelleNote = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,"");
-        monBlocNotes.ajouterNote(nouvelleNote);
+
+        if(noteActuelle == null) {
+            noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate, "");
+            monBlocNotes.ajouterNote(noteActuelle);
+        }else{
+            noteActuelle.setTitre(nomTitre.getText().toString());
+            noteActuelle.setContenu(contenu.getText().toString());
+            noteActuelle.setNiveauImportance(importance.getSelectedItemPosition());
+            noteActuelle.setDateModif(laDate);
+            monBlocNotes.updateNote(noteActuelle);
+        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.v("onItemSelected", "POSITION"+position);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

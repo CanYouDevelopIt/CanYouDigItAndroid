@@ -43,9 +43,11 @@ public class MainActivity extends Activity {
         monBlocNotes = new BlocNotes(this);
 
         for(final Note n: monBlocNotes.getMesNotes()){
-            TableRow row = new TableRow(this);
+            final TableRow row = new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
+
+            Log.v("MainActivity","NiveauImportance = " +n.getNiveauImportance());
 
             switch (n.getNiveauImportance()){
                 case 0: row.setBackgroundColor(Color.RED);
@@ -56,7 +58,6 @@ public class MainActivity extends Activity {
             TextView textTitreNote = new TextView(this);
             textTitreNote.setText(n.getTitre() + " " + n.getDateModif());
             row.addView(textTitreNote);
-
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
