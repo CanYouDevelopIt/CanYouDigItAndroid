@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +95,8 @@ public class BlocNotes implements Parcelable {
     public void ajouterGroupeNotes(String nomGroupe){
         if(!mesGroupesNotes.contains(nomGroupe)) {
             mesGroupesNotes.add(nomGroupe);
+            gbdd.insertGroupe(nomGroupe);
+
         }
     }
 
@@ -113,6 +114,8 @@ public class BlocNotes implements Parcelable {
                 a.setGroupeNotes("");
             }
         }
+        gbdd.deleteGroupe(nomGroupe);
+
     }
 
     @Override
