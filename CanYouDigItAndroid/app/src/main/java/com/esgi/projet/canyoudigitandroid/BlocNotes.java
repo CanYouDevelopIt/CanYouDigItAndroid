@@ -1,7 +1,10 @@
 package com.esgi.projet.canyoudigitandroid;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,18 +16,23 @@ public class BlocNotes implements Parcelable {
     private List<Note> mesNotes;
     private List<Note> mesArchives;
     private List<String> mesGroupesNotes;
+    private NoteBDD nbdd;
+    private GroupeBDD gbdd;
 
-    public BlocNotes() {
-        mesNotes = new ArrayList<Note>();
-        mesArchives = new ArrayList<Note>();
-        mesGroupesNotes = new ArrayList<String>();
+    public BlocNotes(Context context) {
+        nbdd = new NoteBDD(context);
+        gbdd = new GroupeBDD(context);
+
+        mesNotes = nbdd.getMesNotes(false);
+        mesArchives = nbdd.getMesNotes(true);
+        mesGroupesNotes = gbdd.getAllData();
     }
 
     public BlocNotes(Parcel in) {
 
-        mesNotes = new ArrayList<Note>();
-        mesArchives = new ArrayList<Note>();
-        mesGroupesNotes = new ArrayList<String>();
+        mesNotes = nbdd.getMesNotes(false);
+        mesArchives = nbdd.getMesNotes(true);
+        mesGroupesNotes = gbdd.getAllData();
 
         in.readTypedList(mesNotes, Note.CREATOR);
         in.readTypedList(mesArchives, Note.CREATOR);
@@ -49,12 +57,14 @@ public class BlocNotes implements Parcelable {
 
     public void ajouterNote(Note uneNote){
         mesNotes.add(uneNote);
+        nbdd.insertNote(uneNote);
     }
 
     public void supprimerNote(Note uneNote){
         for(Note n: mesNotes){
            if(n.equals(uneNote)){
                mesNotes.remove(n);
+               nbdd.removeNoteWithID(n.getId());
            }
         }
     }
@@ -62,6 +72,8 @@ public class BlocNotes implements Parcelable {
     public void ajouterArchive(Note uneArchive){
         this.supprimerNote(uneArchive);
         mesArchives.add(uneArchive);
+        uneArchive.setArchive(true);
+        nbdd.updateNote(uneArchive);
     }
 
     public void supprimerArchive(Note uneArchive){

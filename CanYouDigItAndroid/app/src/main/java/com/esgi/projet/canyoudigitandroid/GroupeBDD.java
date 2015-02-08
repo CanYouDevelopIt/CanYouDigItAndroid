@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by pascal on 08/02/2015.
  */
@@ -42,12 +45,12 @@ public class GroupeBDD {
         values.put(NOM_GROUPE,nomDuGroupe);
         return bdd.insert(TABLE_GROUPE, null, values);
     }
-    public String getAllData(){
+    public List<String> getAllData(){
         open();
         String[] listeColonnes ={UID_GROUPE,NOM_GROUPE};
         Cursor cursor = bdd.query(TABLE_GROUPE, listeColonnes,null,null,null,null,null);
 
-        StringBuffer buffer = new StringBuffer();
+        List<String> groupeNotes = new ArrayList<String>();
         while(cursor.moveToNext()){
             // On récupère le UID
             int index = cursor.getColumnIndex(UID_GROUPE);
@@ -55,9 +58,10 @@ public class GroupeBDD {
             //On recupère le Nom Du groupe
             int positionNomGroupe = cursor.getColumnIndex(NOM_GROUPE);
             String nomDuGroupe = cursor.getString(positionNomGroupe);
-            buffer.append(cursorIndex +"  ==>  "+nomDuGroupe +"\n");
+
+            groupeNotes.add(nomDuGroupe);
         }
         close();
-    return buffer.toString();
+        return groupeNotes;
     }
 }

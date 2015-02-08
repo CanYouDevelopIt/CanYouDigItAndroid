@@ -49,17 +49,12 @@ public class NoteActivity extends Activity implements AdapterView.OnItemSelected
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         importance.setAdapter(adapter);
 
-
     }
-
-
 
     public void onBackPressed() {
         Note nouvelleNote = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,"");
-        Log.v("ta mere la chienne", nouvelleNote.getDateModif());
-        Intent intent = new Intent(this, MainActivity.class);
         monBlocNotes.ajouterNote(nouvelleNote);
-        intent.putExtra("monBlocNotes",(Parcelable)monBlocNotes);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

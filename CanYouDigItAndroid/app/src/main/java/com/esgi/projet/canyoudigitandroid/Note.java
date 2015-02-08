@@ -21,15 +21,22 @@ public class Note implements Parcelable {
     private boolean archive;
 
     public Note(String _titre, String _contenu, int _niveauImportance, String _date, String _groupeNotes) {
-        Time now = new Time();
-        now.setToNow();
-
         titre = _titre;
         contenu = _contenu;
         niveauImportance = _niveauImportance;
         groupeNotes = _groupeNotes;
         dateModif = _date;
         archive = false;
+    }
+
+    public Note(int _id, String _titre, String _contenu, int _niveauImportance, String _date, String _groupeNotes, boolean _archive) {
+        id = _id;
+        titre = _titre;
+        contenu = _contenu;
+        niveauImportance = _niveauImportance;
+        groupeNotes = _groupeNotes;
+        dateModif = _date;
+        archive = _archive;
     }
 
     public Note(Parcel in) {

@@ -53,7 +53,7 @@ public class ParametrageActivity extends Activity {
         groupeBDD.close();
 
         // Refresh la table :P que je n'ai pas encore créer :3
-        showMessage(groupeBDD.getAllData());
+       // showMessage(groupeBDD.getAllData());
 
     }
     public void showMessage(String message){
