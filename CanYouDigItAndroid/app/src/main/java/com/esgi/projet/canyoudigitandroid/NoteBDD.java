@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class NoteBDD {
 
-    private static final int VERSION_BDD = 1;
+    private static final int VERSION_BDD = 2;
     private static final String NOM_BDD = "notes.db";
 
     private static final String TABLE_NOTES = "table_notes";

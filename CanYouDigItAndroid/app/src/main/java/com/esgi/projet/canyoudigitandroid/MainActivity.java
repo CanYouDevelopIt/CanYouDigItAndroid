@@ -89,7 +89,11 @@ public class MainActivity extends Activity {
 
     public void parametrerGroupes(View v){
         Intent intent = new Intent(this,ParametrageActivity.class);
-        intent.putExtra("monBlocNotes",(Parcelable)monBlocNotes);
+        // CECI Me genère une erreur JAVA BINDER, je l'enleve le temps des test
+        // Apparament ça transfert un trop gros objet
+        // dernière reponse
+        // http://stackoverflow.com/questions/3528735/failed-binder-transaction
+        //intent.putExtra("monBlocNotes",(Parcelable)monBlocNotes);
         startActivity(intent);
     }
 
