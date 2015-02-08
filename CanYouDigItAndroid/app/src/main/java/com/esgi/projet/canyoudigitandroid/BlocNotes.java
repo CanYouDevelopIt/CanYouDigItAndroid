@@ -69,6 +69,15 @@ public class BlocNotes implements Parcelable {
         }
     }
 
+    public Note getNoteById(int idNote){
+        for(Note n: mesNotes){
+            if(n.getId() == idNote){
+                return n;
+            }
+        }
+        return null;
+    }
+
     public void ajouterArchive(Note uneArchive){
         this.supprimerNote(uneArchive);
         mesArchives.add(uneArchive);

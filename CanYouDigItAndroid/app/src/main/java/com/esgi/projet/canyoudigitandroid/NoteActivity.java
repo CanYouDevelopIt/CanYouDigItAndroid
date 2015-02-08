@@ -37,19 +37,32 @@ public class NoteActivity extends Activity implements AdapterView.OnItemSelected
         date = (TextView) findViewById(R.id.dateNote);
         importance = (Spinner) findViewById(R.id.spinner);
 
-        monBlocNotes = (BlocNotes) getIntent().getParcelableExtra("monBlocNotes");
-
         monBlocNotes = new BlocNotes(this);
-
-        Date theDate = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        laDate = sdf.format(theDate);
-        date.setText(laDate);
 
         String[] niveauImportance = new String[] {"Très important","Important","Normal"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, niveauImportance);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         importance.setAdapter(adapter);
+
+        if(getIntent().hasExtra("idNote")){
+
+            int idNote = getIntent().getIntExtra("idNote",-1);
+            Note noteActuelle = monBlocNotes.getNoteById(idNote);
+
+            nomTitre.setText(noteActuelle.getTitre());
+            contenu.setText(noteActuelle.getContenu());
+
+            laDate = noteActuelle.getDateModif();
+
+        }else{
+            Date theDate = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            laDate = sdf.format(theDate);
+        }
+
+        date.setText(laDate);
+
+
 
     }
 
