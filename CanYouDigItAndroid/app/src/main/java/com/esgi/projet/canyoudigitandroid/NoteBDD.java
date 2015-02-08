@@ -2,7 +2,11 @@ package com.esgi.projet.canyoudigitandroid;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jkn1092 on 06/02/2015.
@@ -81,6 +85,41 @@ public class NoteBDD {
     public int removeNoteWithID(int id){
         //Suppression d'un livre de la BDD grâce à l'ID
         return bdd.delete(TABLE_NOTES, COL_ID + " = " +id, null);
+    }
+
+    public List<Note> getMesNotes(Boolean archive){
+
+        List<Note> mesNotes = new ArrayList<Note>();
+
+        open();
+        String[] listeColonnes ={COL_ID,COL_TITRE,COL_CONTENU,COL_NIVEAU_IMPORTANCE,COL_DATE_MODIF,COL_GROUPE};
+        Cursor cursor = bdd.query(TABLE_NOTES,listeColonnes,null,null,null,null,null);
+
+        while(cursor.moveToNext()){
+
+            int colIndex = cursor.getColumnIndex(COL_ID);
+            int colID = cursor.getInt(colIndex);
+
+            int colIndexTitre = cursor.getColumnIndex(COL_TITRE);
+            String colTitre = cursor.getString(colIndexTitre);
+
+            int colIndexContenu = cursor.getColumnIndex(COL_CONTENU);
+            String colContenu = cursor.getString(colIndexContenu);
+
+            int colIndexNiveau = cursor.getColumnIndex(COL_NIVEAU_IMPORTANCE);
+            int colNiveau = cursor.getInt(colIndexNiveau);
+
+            int colIndexDateModif = cursor.getColumnIndex(COL_DATE_MODIF);
+            String colDateModif = cursor.getString(colIndexDateModif);
+
+            int colIndexGroupe = cursor.getColumnIndex(COL_GROUPE);
+            String colGroupe = cursor.getString(colIndexGroupe);
+
+            Note n = new Note(colID,colTitre,colContenu,colNiveau,colDateModif,colGroupe,archive);
+            mesNotes.add(n);
+        }
+
+        return mesNotes;
     }
 
 }

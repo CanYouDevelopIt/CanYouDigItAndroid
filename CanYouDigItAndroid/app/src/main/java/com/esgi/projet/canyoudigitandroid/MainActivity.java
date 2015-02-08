@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
     private static final String STATE_BLOC_NOTES = "STATE_BLOC_NOTES";
     private static final String STATE_RECHERCHE = "RECHERCHE";
-    public BlocNotes monBlocNotes;
+    private BlocNotes monBlocNotes;
     public EditText editTexteRechercheNotes;
 
     @Override
@@ -36,22 +36,10 @@ public class MainActivity extends Activity {
         editTexteRechercheNotes = (EditText) findViewById(R.id.rechercheNote);
 
         if(savedInstanceState != null){
-            monBlocNotes = (BlocNotes)savedInstanceState.getParcelable(STATE_BLOC_NOTES);
             editTexteRechercheNotes.setText(savedInstanceState.getString(STATE_RECHERCHE));
         }
 
-        if(getIntent().hasExtra("monBlocNotes")){
-            monBlocNotes = (BlocNotes)getIntent().getParcelableExtra("monBlocNotes");
-        }
-
-        if(monBlocNotes == null){
-            monBlocNotes = new BlocNotes();
-        }
-
-        if(getIntent().hasExtra("nouvelleNote")) {
-            Note nouvelleNote = (Note)getIntent().getParcelableExtra("nouvelleNote");
-            monBlocNotes.ajouterNote(nouvelleNote);
-        }
+        monBlocNotes = new BlocNotes(this);
 
         for(Note n: monBlocNotes.getMesNotes()){
             TableRow row = new TableRow(this);
@@ -68,32 +56,23 @@ public class MainActivity extends Activity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putParcelable(STATE_BLOC_NOTES, monBlocNotes);
         savedInstanceState.putString(STATE_RECHERCHE, editTexteRechercheNotes.getText().toString());
-
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        monBlocNotes = (BlocNotes)savedInstanceState.getParcelable(STATE_BLOC_NOTES);
         editTexteRechercheNotes.setText(savedInstanceState.getString(STATE_RECHERCHE));
     }
 
     public void ajouterUneNote(View v){
         Intent intent = new Intent(this,NoteActivity.class);
-        intent.putExtra("monBlocNotes",(Parcelable)monBlocNotes);
         startActivity(intent);
     }
 
     public void parametrerGroupes(View v){
         Intent intent = new Intent(this,ParametrageActivity.class);
-        // CECI Me genère une erreur JAVA BINDER, je l'enleve le temps des test
-        // Apparament ça transfert un trop gros objet
-        // dernière reponse
-        // http://stackoverflow.com/questions/3528735/failed-binder-transaction
-        //intent.putExtra("monBlocNotes",(Parcelable)monBlocNotes);
         startActivity(intent);
     }
 
