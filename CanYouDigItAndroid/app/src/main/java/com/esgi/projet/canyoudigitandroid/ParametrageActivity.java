@@ -55,11 +55,11 @@ public class ParametrageActivity extends Activity {
         Log.v("PARAMETRAGE","Je suis dans Create Groupe View ="+groupeToAdd.getText());
         String newGroupe = groupeToAdd.getText().toString();
         monBlocNotes.ajouterGroupeNotes(newGroupe);
-        backToMainActivity();
+        refreshThisActivity();
     }
 
-    private void backToMainActivity() {
-        Intent refresh = new Intent(this, MainActivity.class);
+    private void refreshThisActivity() {
+        Intent refresh = new Intent(this, ParametrageActivity.class);
         startActivity(refresh);
         this.finish();
     }
