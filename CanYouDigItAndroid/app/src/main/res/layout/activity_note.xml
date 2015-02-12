@@ -12,7 +12,9 @@
         android:id="@+id/titreNote"
         android:hint="Titre de la note"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:singleLine="true"
+        android:imeOptions="actionDone" />
 
     <EditText
         android:layout_width="match_parent"
@@ -22,7 +24,9 @@
         android:id="@+id/contenuNote"
         android:hint="Contenu de la note"
         android:layout_marginTop="32dp"
-        android:layout_below="@+id/titreNote" />
+        android:layout_below="@+id/titreNote"
+        android:imeOptions="actionDone"
+        />
 
     <TextView
         android:layout_width="wrap_content"

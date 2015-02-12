@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
         monBlocNotes = new BlocNotes(this);
 
         for(final Note n: monBlocNotes.getMesNotes()){
-            final TableRow row = new TableRow(this);
+            TableRow row = new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
 

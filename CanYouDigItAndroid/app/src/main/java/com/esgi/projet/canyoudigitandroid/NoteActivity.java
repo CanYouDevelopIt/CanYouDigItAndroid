@@ -37,6 +37,7 @@ public class NoteActivity extends Activity{
         date = (TextView) findViewById(R.id.dateNote);
         importance = (Spinner) findViewById(R.id.spinner);
 
+
         monBlocNotes = new BlocNotes(this);
 
         String[] niveauImportance = new String[] {"Très important","Important","Normal"};
