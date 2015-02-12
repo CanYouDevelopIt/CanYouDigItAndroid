@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class GroupeBDD {
         if(nomDuGroupe == null || nomDuGroupe.equals("")){
             return -1;
         }
+        open();
         ContentValues values = new ContentValues();
         values.put(NOM_GROUPE,nomDuGroupe);
         return bdd.insert(TABLE_GROUPE, null, values);
@@ -63,5 +65,12 @@ public class GroupeBDD {
         }
         close();
         return groupeNotes;
+    }
+
+    public int deleteGroupe(String nomGroupe) {
+        open();
+        Log.v("GROUPEBDD", "Suppresion de " + nomGroupe);
+        String[] arguments = {nomGroupe};
+        return bdd.delete(TABLE_GROUPE, NOM_GROUPE + " = ?", arguments);
     }
 }

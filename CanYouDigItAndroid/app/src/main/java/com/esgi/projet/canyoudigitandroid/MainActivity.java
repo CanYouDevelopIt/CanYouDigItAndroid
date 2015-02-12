@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         Button buttonAjouter = (Button) findViewById(R.id.ajouterNote);
-        TableLayout tableLayoutNotes = (TableLayout) findViewById(R.id.tableNote);
+        final TableLayout tableLayoutNotes = (TableLayout) findViewById(R.id.tableNote);
         editTexteRechercheNotes = (EditText) findViewById(R.id.rechercheNote);
 
         if(savedInstanceState != null){
@@ -57,7 +57,33 @@ public class MainActivity extends Activity {
 
             TextView textTitreNote = new TextView(this);
             textTitreNote.setText(n.getTitre() + " " + n.getDateModif());
+
+            Button btnArchiver = new Button(this);
+            btnArchiver.setText("A");
+
+            Button btnSupprimer = new Button(this);
+            btnSupprimer.setText("S");
+
+            btnArchiver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    monBlocNotes.updateNote(n);
+                    tableLayoutNotes.removeView(row);
+                }
+            });
+
+            btnSupprimer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    monBlocNotes.supprimerNote(n);
+                    tableLayoutNotes.removeView(row);
+                }
+            });
+
             row.addView(textTitreNote);
+            row.addView(btnArchiver);
+            row.addView(btnSupprimer);
+
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

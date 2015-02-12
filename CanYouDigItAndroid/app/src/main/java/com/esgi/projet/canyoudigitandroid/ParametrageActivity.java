@@ -2,14 +2,20 @@ package com.esgi.projet.canyoudigitandroid;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -19,7 +25,8 @@ public class ParametrageActivity extends Activity {
 
     EditText groupeToAdd;
 
-    MaBaseSQLite BDD;
+    private TableLayout tableLayoutGroupe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,8 @@ public class ParametrageActivity extends Activity {
 
         Intent i = getIntent();
         monBlocNotes = (BlocNotes) i.getParcelableExtra("monBlocNotes");
+        monBlocNotes = new BlocNotes(this);
+        tableLayoutGroupe = (TableLayout) findViewById(R.id.tabGroupes);
 
         groupeToAdd   = (EditText)findViewById(R.id.ajouteGroupe);
 
@@ -36,30 +45,50 @@ public class ParametrageActivity extends Activity {
         }else{
             Log.v("PARAMETRAGE","PAS NULL nb notes = " + monBlocNotes.getMesNotes().size());
         }
+
+        initGroupeTabe();
+
     }
 
     public void createGroupe(View view){
 
         Log.v("PARAMETRAGE","Je suis dans Create Groupe View ="+groupeToAdd.getText());
         String newGroupe = groupeToAdd.getText().toString();
-        GroupeBDD groupeBDD = new GroupeBDD(this);
-        groupeBDD.open();
-        Long id = groupeBDD.insertGroupe(newGroupe);
-        if(id<0){
-            showMessage("Le groupe "+newGroupe+" n'a pas pu être créer." );
-        }else{
-            showMessage("Le groupe "+newGroupe+" a été créer." );
-        }
-        groupeBDD.close();
-
-        // Refresh la table :P que je n'ai pas encore créer :3
-       // showMessage(groupeBDD.getAllData());
-
+        monBlocNotes.ajouterGroupeNotes(newGroupe);
+        refreshThisActivity();
     }
-    public void showMessage(String message){
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, message, duration);
-        toast.show();
+
+    private void refreshThisActivity() {
+        Intent refresh = new Intent(this, ParametrageActivity.class);
+        startActivity(refresh);
+        this.finish();
+    }
+
+    public void initGroupeTabe(){
+
+        for(final String nomDuGroupe: monBlocNotes.getMesGroupesNotes()){
+            final TableRow row = new TableRow(this);
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            row.setLayoutParams(lp);
+            row.setBackgroundColor(Color.GREEN);
+
+            TextView textTitreNote = new TextView(this);
+            textTitreNote.setText(nomDuGroupe);
+
+            Button btnSupprimer = new Button(this);
+            btnSupprimer.setText("Supprimer");
+            btnSupprimer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    monBlocNotes.supprimerGroupeNotes(nomDuGroupe);
+                    tableLayoutGroupe.removeView(row);
+                }
+            });
+            row.addView(btnSupprimer);
+            row.addView(textTitreNote);
+
+            tableLayoutGroupe.addView(row,lp);
+        }
     }
 
 
