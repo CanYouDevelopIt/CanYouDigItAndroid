@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class MainActivity extends Activity {
     private static final String STATE_BLOC_NOTES = "STATE_BLOC_NOTES";
     private static final String STATE_RECHERCHE = "RECHERCHE";
     private BlocNotes monBlocNotes;
+    private NoteListAdapter nAdapter;
     public EditText editTexteRechercheNotes;
 
     @Override
@@ -33,7 +35,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         Button buttonAjouter = (Button) findViewById(R.id.ajouterNote);
-        final TableLayout tableLayoutNotes = (TableLayout) findViewById(R.id.tableNote);
+        ListView listNotes = (ListView) findViewById(R.id.listNote);
+        Button buttonAfficherNotes = (Button) findViewById(R.id.afficherNotes);
+        Button buttonAfficherArchives = (Button) findViewById(R.id.afficherArchives);
         editTexteRechercheNotes = (EditText) findViewById(R.id.rechercheNote);
 
         if(savedInstanceState != null){
@@ -42,57 +46,22 @@ public class MainActivity extends Activity {
 
         monBlocNotes = new BlocNotes(this);
 
-        for(final Note n: monBlocNotes.getMesNotes()){
-            TableRow row = new TableRow(this);
-            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            row.setLayoutParams(lp);
+        nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes);
+        listNotes.setAdapter(nAdapter);
 
-            Log.v("MainActivity","NiveauImportance = " +n.getNiveauImportance());
+        buttonAfficherNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            switch (n.getNiveauImportance()){
-                case 0: row.setBackgroundColor(Color.RED);
-                case 1: row.setBackgroundColor(Color.GREEN);
-                case 2: row.setBackgroundColor(Color.YELLOW);
             }
+        });
 
-            TextView textTitreNote = new TextView(this);
-            textTitreNote.setText(n.getTitre() + " " + n.getDateModif());
+        buttonAfficherArchives.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            Button btnArchiver = new Button(this);
-            btnArchiver.setText("A");
-
-            Button btnSupprimer = new Button(this);
-            btnSupprimer.setText("S");
-
-            btnArchiver.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    monBlocNotes.updateNote(n);
-                    tableLayoutNotes.removeView(row);
-                }
-            });
-
-            btnSupprimer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    monBlocNotes.supprimerNote(n);
-                    tableLayoutNotes.removeView(row);
-                }
-            });
-
-            row.addView(textTitreNote);
-            row.addView(btnArchiver);
-            row.addView(btnSupprimer);
-
-            row.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    afficherUneNote(n.getId());
-                }
-            });
-
-            tableLayoutNotes.addView(row,lp);
-        }
+            }
+        });
 
     }
 
@@ -113,17 +82,17 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    public void afficherUneNote(int idNote){
-        Intent intent = new Intent(this,NoteActivity.class);
-        intent.putExtra("idNote",idNote);
-        startActivity(intent);
-    }
-
     public void parametrerGroupes(View v){
         Intent intent = new Intent(this,ParametrageActivity.class);
         startActivity(intent);
     }
 
-
+    /**
+     * helper to show what happens when all data is new
+     */
+    private void reloadAllData(){
+        nAdapter.setMonBlocNotes(monBlocNotes);
+        nAdapter.notifyDataSetChanged();
+    }
 
 }
