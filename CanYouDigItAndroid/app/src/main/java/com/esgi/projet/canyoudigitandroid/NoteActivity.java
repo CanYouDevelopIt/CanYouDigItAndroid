@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 public class NoteActivity extends Activity{
@@ -26,6 +27,7 @@ public class NoteActivity extends Activity{
     public Spinner importance;
     public String laDate;
     public Note noteActuelle;
+    public Spinner groupe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +38,26 @@ public class NoteActivity extends Activity{
         contenu = (EditText) findViewById(R.id.contenuNote);
         date = (TextView) findViewById(R.id.dateNote);
         importance = (Spinner) findViewById(R.id.spinner);
+        groupe = (Spinner) findViewById(R.id.groupeSpinner);
 
 
         monBlocNotes = new BlocNotes(this);
 
+        // Chargement du spinner Importance
         String[] niveauImportance = new String[] {"Très important","Important","Normal"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, niveauImportance);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         importance.setAdapter(adapter);
+
+        //Chargement du Spinner Groupe
+        GroupeBDD groupeBDD = new GroupeBDD(this);
+        List<String> listGroupes = groupeBDD.getAllData();
+        Log.v("NOTE ACTIVITY", " Size of my Groupe List ==>"+listGroupes.size());
+        String[] tableGroupes = listGroupes.toArray(new String[listGroupes.size()]);
+        ArrayAdapter<String> groupeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, tableGroupes);
+        groupeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        groupe.setAdapter(groupeAdapter);
+
 
         if(getIntent().hasExtra("idNote")){
 
@@ -52,6 +66,13 @@ public class NoteActivity extends Activity{
             nomTitre.setText(noteActuelle.getTitre());
             contenu.setText(noteActuelle.getContenu());
             importance.setSelection(noteActuelle.getNiveauImportance());
+            for(int i =0; i< tableGroupes.length-1;i++){
+                if(tableGroupes[i].equals(noteActuelle.getGroupeNotes())){
+                    groupe.setSelection(i);
+                    break;
+                }
+            }
+
             laDate = noteActuelle.getDateModif();
 
         }else{
@@ -69,12 +90,13 @@ public class NoteActivity extends Activity{
     public void onBackPressed() {
 
         if(noteActuelle == null) {
-            noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate, "");
+            noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate, groupe.getSelectedItem().toString());
             monBlocNotes.ajouterNote(noteActuelle);
         }else{
             noteActuelle.setTitre(nomTitre.getText().toString());
             noteActuelle.setContenu(contenu.getText().toString());
             noteActuelle.setNiveauImportance(importance.getSelectedItemPosition());
+            noteActuelle.setGroupeNotes(groupe.getSelectedItem().toString());
             noteActuelle.setDateModif(laDate);
             monBlocNotes.updateNote(noteActuelle);
         }
