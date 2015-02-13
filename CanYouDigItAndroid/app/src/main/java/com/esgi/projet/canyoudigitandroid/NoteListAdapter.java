@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +19,17 @@ import java.util.List;
  */
 public class NoteListAdapter extends ArrayAdapter<Note> {
 
-    public BlocNotes monBlocNotes;
+    private BlocNotes monBlocNotes;
+    private List<Note> items;
     private int layoutResourceId;
     private Context context;
 
-    public NoteListAdapter(Context context, int layoutResourceId, BlocNotes monBlocNotes) {
-        super(context, layoutResourceId, monBlocNotes.getMesNotes());
+    public NoteListAdapter(Context context, int layoutResourceId, BlocNotes _monBlocNotes, List<Note> _items) {
+        super(context, layoutResourceId, _items);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
-        this.monBlocNotes = monBlocNotes;
+        this.monBlocNotes = _monBlocNotes;
+        this.items = _items;
     }
 
     @Override
@@ -65,23 +68,31 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
         btnArchiverNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                monBlocNotes.updateNote(note);
+                if(note.getArchive()){
+                    monBlocNotes.archiveToNote(note);
+                }else{
+                    monBlocNotes.ajouterArchive(note);
+                }
+                items.remove(note);
+                notifyDataSetChanged();
             }
         });
 
         btnSupprimerNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                monBlocNotes.supprimerNote(note);
+                if(note.getArchive()){
+                    monBlocNotes.supprimerArchive(note);
+                }else{
+                    monBlocNotes.supprimerNote(note);
+                }
+                items.remove(note);
+                notifyDataSetChanged();
             }
         });
 
         // Return the completed view to render on screen
         return convertView;
     }
-
-    public void setMonBlocNotes(BlocNotes _monBlocNotes){
-    }
-
 
 }

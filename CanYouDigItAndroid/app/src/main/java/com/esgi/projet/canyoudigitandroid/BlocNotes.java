@@ -46,6 +46,14 @@ public class BlocNotes implements Parcelable {
         this.mesNotes = mesNotes;
     }
 
+    public List<Note> getMesArchives() {
+        return mesArchives;
+    }
+
+    public void setMesArchives(List<Note> _mesArchives) {
+        this.mesArchives = _mesArchives;
+    }
+
     public List<String> getMesGroupesNotes() {
         return mesGroupesNotes;
     }
@@ -78,18 +86,22 @@ public class BlocNotes implements Parcelable {
     }
 
     public void ajouterArchive(Note uneArchive){
-        this.supprimerNote(uneArchive);
+        mesNotes.remove(uneArchive);
         mesArchives.add(uneArchive);
         uneArchive.setArchive(true);
         nbdd.updateNote(uneArchive);
     }
 
     public void supprimerArchive(Note uneArchive){
-        for(Note a: mesArchives){
-            if(a.equals(uneArchive)){
-                mesArchives.remove(a);
-            }
-        }
+        mesArchives.remove(uneArchive);
+        nbdd.removeNoteWithID(uneArchive.getId());
+    }
+
+    public void archiveToNote(Note uneArchive){
+        mesArchives.remove(uneArchive);
+        mesNotes.add(uneArchive);
+        uneArchive.setArchive(false);
+        nbdd.updateNote(uneArchive);
     }
 
     public void ajouterGroupeNotes(String nomGroupe){

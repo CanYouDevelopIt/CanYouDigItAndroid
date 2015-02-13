@@ -89,14 +89,19 @@ public class NoteActivity extends Activity{
 
     public void onBackPressed() {
 
+        String nomGroupe = "";
+        if(groupe.getSelectedItem() != null){
+            nomGroupe = groupe.getSelectedItem().toString();
+        }
+
         if(noteActuelle == null) {
-            noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate, groupe.getSelectedItem().toString());
+            noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,nomGroupe);
             monBlocNotes.ajouterNote(noteActuelle);
         }else{
             noteActuelle.setTitre(nomTitre.getText().toString());
             noteActuelle.setContenu(contenu.getText().toString());
             noteActuelle.setNiveauImportance(importance.getSelectedItemPosition());
-            noteActuelle.setGroupeNotes(groupe.getSelectedItem().toString());
+            noteActuelle.setGroupeNotes(nomGroupe);
             noteActuelle.setDateModif(laDate);
             monBlocNotes.updateNote(noteActuelle);
         }

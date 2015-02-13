@@ -6,4 +6,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_parametrage">ParametrageActivity</string>
 
+    <string-array name="array_trier">
+        <item>Date</item>
+        <item>Titre</item>
+        <item>Importance</item>
+    </string-array>
+
 </resources>
