@@ -50,9 +50,8 @@ public class NoteActivity extends Activity{
         importance.setAdapter(adapter);
 
         //Chargement du Spinner Groupe
-        GroupeBDD groupeBDD = new GroupeBDD(this);
-        List<String> listGroupes = groupeBDD.getAllData();
-        Log.v("NOTE ACTIVITY", " Size of my Groupe List ==>"+listGroupes.size());
+        String defaultGroupeValue = getString(R.string.default_groupe_value);
+        List<String> listGroupes = ajoutDefaultValueGroupe(defaultGroupeValue);
         String[] tableGroupes = listGroupes.toArray(new String[listGroupes.size()]);
         ArrayAdapter<String> groupeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, tableGroupes);
         groupeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -66,7 +65,7 @@ public class NoteActivity extends Activity{
             nomTitre.setText(noteActuelle.getTitre());
             contenu.setText(noteActuelle.getContenu());
             importance.setSelection(noteActuelle.getNiveauImportance());
-            for(int i =0; i< tableGroupes.length-1;i++){
+            for(int i =0; i< tableGroupes.length;i++){
                 if(tableGroupes[i].equals(noteActuelle.getGroupeNotes())){
                     groupe.setSelection(i);
                     break;
@@ -82,8 +81,6 @@ public class NoteActivity extends Activity{
         }
 
         date.setText(laDate);
-
-
 
     }
 
@@ -107,5 +104,16 @@ public class NoteActivity extends Activity{
         }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public List<String> ajoutDefaultValueGroupe(String defaultGroupeValue){
+
+        List<String> listGroupes = monBlocNotes.getMesGroupesNotes();
+
+        if(!listGroupes.contains(defaultGroupeValue)){
+            Log.v("NOTE ACTIVITY", "Ajout de la valeur par défaut d'un groupe");
+            listGroupes.add(defaultGroupeValue);
+        }
+        return listGroupes;
     }
 }

@@ -108,7 +108,6 @@ public class BlocNotes implements Parcelable {
         if(!mesGroupesNotes.contains(nomGroupe)) {
             mesGroupesNotes.add(nomGroupe);
             gbdd.insertGroupe(nomGroupe);
-
         }
     }
 
@@ -119,12 +118,14 @@ public class BlocNotes implements Parcelable {
             if(n.getGroupeNotes().equals(nomGroupe)){
                 n.setGroupeNotes("");
             }
+            updateNote(n);
         }
 
         for(Note a: mesArchives){
             if(a.getGroupeNotes().equals(nomGroupe)){
                 a.setGroupeNotes("");
             }
+            updateNote(a);
         }
         gbdd.deleteGroupe(nomGroupe);
 
