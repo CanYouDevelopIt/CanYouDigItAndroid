@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,11 +29,14 @@ public class MainActivity extends Activity {
     private EditText editTexteRechercheNotes;
     private Spinner trierParGroupe;
     private Spinner trierParDefaut;
+    private boolean afficherArchives = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         ListView listNotes = (ListView) findViewById(R.id.listNote);
         Button buttonAfficherNotes = (Button) findViewById(R.id.afficherNotes);
@@ -64,6 +68,8 @@ public class MainActivity extends Activity {
                 nAdapter.addAll(monBlocNotes.getMesNotes());
                 nAdapter.notifyDataSetChanged();
 
+                afficherArchives = false;
+
                 Button buttonAjouter = (Button) findViewById(R.id.ajouterNote);
                 buttonAjouter.setVisibility(View.VISIBLE);
             }
@@ -75,6 +81,8 @@ public class MainActivity extends Activity {
                 nAdapter.clear();
                 nAdapter.addAll(monBlocNotes.getMesArchives());
                 nAdapter.notifyDataSetChanged();
+
+                afficherArchives = true;
 
                 Button buttonAjouter = (Button) findViewById(R.id.ajouterNote);
                 buttonAjouter.setVisibility(View.INVISIBLE);
@@ -105,12 +113,10 @@ public class MainActivity extends Activity {
 
         editTexteRechercheNotes.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                trierListView();
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {trierListView();}
 
             @Override
             public void afterTextChanged(Editable s) {}
@@ -138,7 +144,12 @@ public class MainActivity extends Activity {
         conditionWhereRecherche = editTexteRechercheNotes.getText().toString();
 
         monBlocNotes.selectFromNbdd(conditionOrderBy,conditionWhereGroupe,conditionWhereRecherche);
-        nAdapter.addAll(monBlocNotes.getMesNotes());
+
+        if (!afficherArchives)
+            nAdapter.addAll(monBlocNotes.getMesNotes());
+        else
+            nAdapter.addAll(monBlocNotes.getMesArchives());
+
         nAdapter.notifyDataSetChanged();
     }
 

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -81,27 +83,29 @@ public class NoteActivity extends Activity{
         }
 
         date.setText(laDate);
-
     }
 
     public void onBackPressed() {
 
         String nomGroupe = "";
-        if(groupe.getSelectedItem() != null){
-            nomGroupe = groupe.getSelectedItem().toString();
+
+        if(!nomTitre.getText().toString().equals("")) {
+            if(groupe.getSelectedItem() != null){
+                nomGroupe = groupe.getSelectedItem().toString();
+            }
+            if(noteActuelle == null) {
+                noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,nomGroupe);
+                monBlocNotes.ajouterNote(noteActuelle);
+            }else{
+                noteActuelle.setTitre(nomTitre.getText().toString());
+                noteActuelle.setContenu(contenu.getText().toString());
+                noteActuelle.setNiveauImportance(importance.getSelectedItemPosition());
+                noteActuelle.setGroupeNotes(nomGroupe);
+                noteActuelle.setDateModif(laDate);
+                monBlocNotes.updateNote(noteActuelle);
+            }
         }
 
-        if(noteActuelle == null) {
-            noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,nomGroupe);
-            monBlocNotes.ajouterNote(noteActuelle);
-        }else{
-            noteActuelle.setTitre(nomTitre.getText().toString());
-            noteActuelle.setContenu(contenu.getText().toString());
-            noteActuelle.setNiveauImportance(importance.getSelectedItemPosition());
-            noteActuelle.setGroupeNotes(nomGroupe);
-            noteActuelle.setDateModif(laDate);
-            monBlocNotes.updateNote(noteActuelle);
-        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
