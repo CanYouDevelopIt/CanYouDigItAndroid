@@ -49,9 +49,9 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
 
         tvTitreNote.setText(note.getTitre());
         switch (note.getNiveauImportance()){
-            case 0: convertView.setBackgroundColor(Color.RED); break;
-            case 1: convertView.setBackgroundColor(Color.GREEN); break;
-            case 2: convertView.setBackgroundColor(Color.YELLOW); break;
+            case 0: convertView.setBackgroundResource(R.color.rouge); break;
+            case 1: convertView.setBackgroundResource(R.color.orange); break;
+            case 2: convertView.setBackgroundResource(R.color.bleu); break;
 
 
         }
