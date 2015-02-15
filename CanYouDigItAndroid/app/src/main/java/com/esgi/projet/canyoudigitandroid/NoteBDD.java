@@ -72,19 +72,32 @@ public class NoteBDD {
         return bdd.delete(TABLE_NOTES, COL_ID + " = " + id, null);
     }
 
-    public List<Note> getMesNotes(Boolean archive){
+    public List<Note> getMesNotes(Boolean archive, String conditionOrderBy, String conditionWhereGroupe, String conditionWhereRecherche){
         List<Note> mesNotes = new ArrayList<Note>();
+
+        String conditionWhere = "";
 
         int archiveValue;
         if(archive == false){
-        archiveValue = 0;
+            archiveValue = 0;
         }else{
-        archiveValue = 1;
+            archiveValue = 1;
         }
-        
+
+        if(conditionOrderBy == "")
+            conditionOrderBy = COL_DATE_MODIF + " DESC";
+        else
+            conditionOrderBy += " DESC";
+
+        if(conditionWhereGroupe != "")
+            conditionWhere += " AND " + COL_GROUPE + "= '" + conditionWhereGroupe + "'";
+
+        if(conditionWhereRecherche != "")
+            conditionWhere += " AND " + COL_TITRE + " LIKE '%" + conditionWhereRecherche + "%'";
+
         open();
         String[] listeColonnes ={COL_ID,COL_TITRE,COL_CONTENU,COL_NIVEAU_IMPORTANCE,COL_DATE_MODIF,COL_GROUPE};
-        Cursor cursor = bdd.query(TABLE_NOTES,listeColonnes,COL_ARCHIVE+"= "+archiveValue,null,null,null,null);
+        Cursor cursor = bdd.query(TABLE_NOTES,listeColonnes,COL_ARCHIVE+"= "+archiveValue + conditionWhere,null,null,null,conditionOrderBy);
 
         while(cursor.moveToNext()){
 

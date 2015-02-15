@@ -2,22 +2,16 @@ package com.esgi.projet.canyoudigitandroid;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Parcelable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
@@ -32,6 +26,8 @@ public class MainActivity extends Activity {
     private BlocNotes monBlocNotes;
     private NoteListAdapter nAdapter;
     private EditText editTexteRechercheNotes;
+    private Spinner trierParGroupe;
+    private Spinner trierParDefaut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +37,10 @@ public class MainActivity extends Activity {
         ListView listNotes = (ListView) findViewById(R.id.listNote);
         Button buttonAfficherNotes = (Button) findViewById(R.id.afficherNotes);
         Button buttonAfficherArchives = (Button) findViewById(R.id.afficherArchives);
+
         editTexteRechercheNotes = (EditText) findViewById(R.id.rechercheNote);
-        Spinner trierParGroupe = (Spinner) findViewById(R.id.spinnerTrierGroupe);
+        trierParGroupe = (Spinner) findViewById(R.id.spinnerTrierGroupe);
+        trierParDefaut = (Spinner) findViewById(R.id.spinnerTrier);
 
         if(savedInstanceState != null){
             editTexteRechercheNotes.setText(savedInstanceState.getString(STATE_RECHERCHE));
@@ -50,7 +48,9 @@ public class MainActivity extends Activity {
 
         monBlocNotes = new BlocNotes(this);
 
-        ArrayAdapter<String> groupeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, monBlocNotes.getMesGroupesNotes());
+        ArrayAdapter<String> groupeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item);
+        groupeAdapter.add(getString(R.string.default_groupe_value));
+        groupeAdapter.addAll(monBlocNotes.getMesGroupesNotes());
         groupeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         trierParGroupe.setAdapter(groupeAdapter);
 
@@ -81,6 +81,65 @@ public class MainActivity extends Activity {
             }
         });
 
+        trierParDefaut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                trierListView();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        trierParGroupe.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                trierListView();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        editTexteRechercheNotes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                trierListView();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+    }
+
+    public void trierListView(){
+        nAdapter.clear();
+
+        String conditionOrderBy = "";
+        String conditionWhereGroupe = "";
+        String conditionWhereRecherche = "";
+
+        switch (trierParDefaut.getSelectedItemPosition()){
+            case 0: conditionOrderBy = "date_modif"; break;
+            case 1: conditionOrderBy = "titre"; break;
+            case 2: conditionOrderBy ="niveau_importance"; break;
+        }
+
+        if (trierParGroupe.getSelectedItem() != null && !trierParGroupe.getSelectedItem().toString().equals(getString(R.string.default_groupe_value))){
+            conditionWhereGroupe = trierParGroupe.getSelectedItem().toString();
+        }
+
+        conditionWhereRecherche = editTexteRechercheNotes.getText().toString();
+
+        monBlocNotes.selectFromNbdd(conditionOrderBy,conditionWhereGroupe,conditionWhereRecherche);
+        nAdapter.addAll(monBlocNotes.getMesNotes());
+        nAdapter.notifyDataSetChanged();
     }
 
     @Override

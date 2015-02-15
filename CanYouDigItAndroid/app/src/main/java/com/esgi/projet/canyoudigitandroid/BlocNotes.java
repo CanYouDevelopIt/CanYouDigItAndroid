@@ -22,15 +22,15 @@ public class BlocNotes implements Parcelable {
         nbdd = new NoteBDD(context);
         gbdd = new GroupeBDD(context);
 
-        mesNotes = nbdd.getMesNotes(false);
-        mesArchives = nbdd.getMesNotes(true);
+        mesNotes = nbdd.getMesNotes(false,"","","");
+        mesArchives = nbdd.getMesNotes(true,"","","");
         mesGroupesNotes = gbdd.getAllData();
     }
 
     public BlocNotes(Parcel in) {
 
-        mesNotes = nbdd.getMesNotes(false);
-        mesArchives = nbdd.getMesNotes(true);
+        mesNotes = nbdd.getMesNotes(false,"","","");
+        mesArchives = nbdd.getMesNotes(true,"","","");
         mesGroupesNotes = gbdd.getAllData();
 
         in.readTypedList(mesNotes, Note.CREATOR);
@@ -129,6 +129,11 @@ public class BlocNotes implements Parcelable {
         }
         gbdd.deleteGroupe(nomGroupe);
 
+    }
+
+    public void selectFromNbdd(String conditionOrderBy,String conditionWhereGroupe, String conditionWhereRecherche){
+        mesNotes = nbdd.getMesNotes(false,conditionOrderBy,conditionWhereGroupe, conditionWhereRecherche);
+        mesArchives = nbdd.getMesNotes(true,conditionOrderBy,conditionWhereGroupe, conditionWhereRecherche);
     }
 
     @Override
