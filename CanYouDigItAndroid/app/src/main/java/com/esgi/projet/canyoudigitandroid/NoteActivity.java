@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -88,9 +89,8 @@ public class NoteActivity extends Activity{
     public void onBackPressed() {
 
         String nomGroupe = "";
-
         if(!nomTitre.getText().toString().equals("")) {
-            if(groupe.getSelectedItem() != null){
+            if(groupe.getSelectedItem() != null && !groupe.getSelectedItem().toString().equals(getString(R.string.default_groupe_value))){
                 nomGroupe = groupe.getSelectedItem().toString();
             }
             if(noteActuelle == null) {
@@ -112,12 +112,14 @@ public class NoteActivity extends Activity{
 
     public List<String> ajoutDefaultValueGroupe(String defaultGroupeValue){
 
-        List<String> listGroupes = monBlocNotes.getMesGroupesNotes();
+        List<String> listGroupes = new ArrayList<String>();
 
         if(!listGroupes.contains(defaultGroupeValue)){
-            Log.v("NOTE ACTIVITY", "Ajout de la valeur par défaut d'un groupe");
             listGroupes.add(defaultGroupeValue);
         }
+
+        listGroupes.addAll(monBlocNotes.getMesGroupesNotes());
+
         return listGroupes;
     }
 }

@@ -19,35 +19,36 @@
         android:id="@+id/textCreerGroupeNotes"
         android:layout_below="@+id/titreParametrages"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="54dp" />
+        android:layout_marginTop="30dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ajouteGroupe"
-        android:layout_below="@+id/textCreerGroupeNotes"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="43dp"
-        android:hint="Saisir un groupe de notes" />
+        android:id="@+id/layoutGroupe"
+        android:orientation="horizontal"
+        android:layout_below="@+id/textCreerGroupeNotes">
 
-    <TableLayout
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/ajouteGroupe"
+            android:hint="Saisir un groupe de notes" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="+"
+            android:id="@+id/ajoutGroupe"
+            android:onClick="createGroupe" />
+
+    </LinearLayout>
+
+    <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/ajouteGroupe"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/tabGroupes"></TableLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
-        android:id="@+id/ajoutGroupe"
-        android:layout_above="@+id/tabGroupes"
-        android:layout_toEndOf="@+id/titreParametrages"
-        android:onClick="createGroupe" />
+        android:layout_below="@+id/layoutGroupe"
+        android:id="@+id/listGroupes"></ListView>
 
 </RelativeLayout>

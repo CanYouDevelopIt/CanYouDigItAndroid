@@ -14,14 +14,12 @@
             android:id="@+id/supprimerNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="removeAtomPayOnClickHandler"
-            android:text="S"/>
+            android:text="Supprimer"/>
 
         <Button
             android:id="@+id/archiverNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="removeAtomPayOnClickHandler"
-            android:text="A" />
+            android:text="Archiver" />
 
 </LinearLayout>

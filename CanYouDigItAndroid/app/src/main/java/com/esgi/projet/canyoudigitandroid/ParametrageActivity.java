@@ -13,20 +13,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 
 public class ParametrageActivity extends Activity {
 
-    public BlocNotes monBlocNotes;
-
-    EditText groupeToAdd;
-
-    private TableLayout tableLayoutGroupe;
-
+    private BlocNotes monBlocNotes;
+    private EditText groupeToAdd;
+    private ListView listLayoutGroupe;
+    private GroupeListAdapter gAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +37,14 @@ public class ParametrageActivity extends Activity {
         Intent i = getIntent();
         monBlocNotes = (BlocNotes) i.getParcelableExtra("monBlocNotes");
         monBlocNotes = new BlocNotes(this);
-        tableLayoutGroupe = (TableLayout) findViewById(R.id.tabGroupes);
-
+        listLayoutGroupe = (ListView) findViewById(R.id.listGroupes);
         groupeToAdd   = (EditText)findViewById(R.id.ajouteGroupe);
 
-        if(monBlocNotes == null){
-            Log.v("PARAMETRAGE","NULL y'a un problème ça doit pas etre null et ça marche normalement j'ai testé !");
-        }else{
-            Log.v("PARAMETRAGE","PAS NULL nb notes = " + monBlocNotes.getMesNotes().size());
-        }
-
-        initGroupeTabe();
-
+        gAdapter = new GroupeListAdapter(this, R.layout.my_list_note_layout, monBlocNotes, monBlocNotes.getMesGroupesNotes());
+        listLayoutGroupe.setAdapter(gAdapter);
     }
 
     public void createGroupe(View view){
-
-        Log.v("PARAMETRAGE","Je suis dans Create Groupe View ="+groupeToAdd.getText());
         String newGroupe = groupeToAdd.getText().toString();
         monBlocNotes.ajouterGroupeNotes(newGroupe);
         refreshThisActivity();
@@ -63,34 +55,6 @@ public class ParametrageActivity extends Activity {
         startActivity(refresh);
         this.finish();
     }
-
-    public void initGroupeTabe(){
-
-        for(final String nomDuGroupe: monBlocNotes.getMesGroupesNotes()){
-            final TableRow row = new TableRow(this);
-            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            row.setLayoutParams(lp);
-            row.setBackgroundColor(Color.GREEN);
-
-            TextView textTitreNote = new TextView(this);
-            textTitreNote.setText(nomDuGroupe);
-
-            Button btnSupprimer = new Button(this);
-            btnSupprimer.setText("Supprimer");
-            btnSupprimer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    monBlocNotes.supprimerGroupeNotes(nomDuGroupe);
-                    tableLayoutGroupe.removeView(row);
-                }
-            });
-            row.addView(btnSupprimer);
-            row.addView(textTitreNote);
-
-            tableLayoutGroupe.addView(row,lp);
-        }
-    }
-
 
     public void onBackPressed() {
         Intent intent = new Intent(this, MainActivity.class);
