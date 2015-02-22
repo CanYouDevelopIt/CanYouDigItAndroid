@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,6 +33,7 @@ public class NoteActivity extends Activity{
     public String laDate;
     public Note noteActuelle;
     public Spinner groupe;
+    public Boolean noteModifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,6 @@ public class NoteActivity extends Activity{
         groupeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         groupe.setAdapter(groupeAdapter);
 
-
         if(getIntent().hasExtra("idNote")){
 
             int idNote = getIntent().getIntExtra("idNote", -1);
@@ -76,23 +78,39 @@ public class NoteActivity extends Activity{
             }
 
             laDate = noteActuelle.getDateModif();
-
+            noteModifier = false;
         }else{
             Date theDate = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             laDate = sdf.format(theDate);
+            noteModifier = true;
         }
 
         date.setText(laDate);
+
     }
 
     public void onBackPressed() {
 
         String nomGroupe = "";
+        if(groupe.getSelectedItem() != null && !groupe.getSelectedItem().toString().equals(getString(R.string.default_groupe_value))){
+            nomGroupe = groupe.getSelectedItem().toString();
+        }
+
+        if(noteActuelle != null){
+            if(!nomTitre.getText().toString().equals(noteActuelle.getTitre())){noteModifier = true;}
+            if(!contenu.getText().toString().equals(noteActuelle.getContenu())){noteModifier = true;}
+            if(importance.getSelectedItemPosition() != noteActuelle.getNiveauImportance()){noteModifier = true;}
+            if(!nomGroupe.equals(noteActuelle.getGroupeNotes())){ noteModifier = true;}
+        }
+
+        if(noteModifier){
+            Date theDate = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            laDate = sdf.format(theDate);
+        }
+
         if(!nomTitre.getText().toString().equals("")) {
-            if(groupe.getSelectedItem() != null && !groupe.getSelectedItem().toString().equals(getString(R.string.default_groupe_value))){
-                nomGroupe = groupe.getSelectedItem().toString();
-            }
             if(noteActuelle == null) {
                 noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,nomGroupe);
                 monBlocNotes.ajouterNote(noteActuelle);

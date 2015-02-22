@@ -47,6 +47,12 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
         Button btnSupprimerNote = (Button) convertView.findViewById(R.id.supprimerNote);
         Button btnArchiverNote = (Button) convertView.findViewById(R.id.archiverNote);
 
+        if(note.getArchive()){
+            btnArchiverNote.setText("Désarchiver");
+        }else{
+            btnArchiverNote.setText("Archiver");
+        }
+
         tvTitreNote.setText(note.getTitre());
         switch (note.getNiveauImportance()){
             case 0: convertView.setBackgroundResource(R.color.rouge); break;
