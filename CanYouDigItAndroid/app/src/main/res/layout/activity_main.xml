@@ -19,18 +19,17 @@
             <TextView android:text="Can You Dig It ?"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="20dp"
+                android:textSize="@dimen/title_activity"
                 android:id="@+id/textView" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
                 android:text="Paramètres"
                 android:id="@+id/parametreGroupes"
-                android:onClick="parametrerGroupes"/>
+                android:onClick="parametrerGroupes"
+                android:layout_alignParentRight="true"/>
 
         </LinearLayout>
 
@@ -39,7 +38,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@id/linearTop"
-            android:id="@+id/linearRecherche">
+            android:id="@+id/linearRecherche"
+            android:layout_marginTop="@dimen/margin_top_from_title">
 
             <Spinner
                 android:id="@+id/spinnerTrier"
@@ -68,19 +68,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/margin_top_default"/>
 
 
         <ListView
             android:id="@+id/listNote"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/margin_top_default"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_top_default">
 
             <Button
             android:text="Notes"

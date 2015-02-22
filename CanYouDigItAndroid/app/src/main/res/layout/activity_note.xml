@@ -13,6 +13,7 @@
         android:hint="Titre de la note"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:textSize="@dimen/title_activity"
         android:singleLine="true"
         android:imeOptions="actionDone" />
 
@@ -23,7 +24,7 @@
         android:ems="10"
         android:id="@+id/contenuNote"
         android:hint="Contenu de la note"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/margin_top_from_title"
         android:layout_below="@+id/titreNote"
         android:imeOptions="actionDone"
         />
@@ -34,18 +35,21 @@
         android:text="Date Note"
         android:id="@+id/dateNote"
         android:layout_below="@+id/contenuNote"
-        android:layout_alignRight="@+id/contenuNote"/>
+        android:layout_alignRight="@+id/contenuNote"
+        android:layout_marginTop="@dimen/margin_top_default"/>
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
-        android:layout_below="@+id/dateNote" />
+        android:layout_below="@+id/dateNote"
+        android:layout_marginTop="@dimen/margin_top_default"/>
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/groupeSpinner"
-        android:layout_below="@+id/spinner" />
+        android:layout_below="@+id/spinner"
+        android:layout_marginTop="@dimen/margin_top_default"/>
 
 </RelativeLayout>
