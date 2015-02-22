@@ -24,6 +24,7 @@ public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
     private static final String STATE_BLOC_NOTES = "STATE_BLOC_NOTES";
     private static final String STATE_RECHERCHE = "RECHERCHE";
+    private static final String STATE_ARCHIVE = "ARCHIVE";
     private BlocNotes monBlocNotes;
     private NoteListAdapter nAdapter;
     private EditText editTexteRechercheNotes;
@@ -58,7 +59,11 @@ public class MainActivity extends Activity {
         groupeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         trierParGroupe.setAdapter(groupeAdapter);
 
-        nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes, monBlocNotes.getMesNotes());
+        if(afficherArchives){
+            nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes, monBlocNotes.getMesArchives());
+        }else{
+            nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes, monBlocNotes.getMesNotes());
+        }
         listNotes.setAdapter(nAdapter);
 
         buttonAfficherNotes.setOnClickListener(new View.OnClickListener() {

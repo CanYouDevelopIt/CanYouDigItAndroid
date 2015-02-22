@@ -12,6 +12,6 @@
         <item>Importance</item>
     </string-array>
 
-    <string name="default_groupe_value"></string>
+    <string name="default_groupe_value">Sélectionner un groupe</string>
 
 </resources>
