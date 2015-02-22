@@ -49,6 +49,7 @@ public class MainActivity extends Activity {
 
         if(savedInstanceState != null){
             editTexteRechercheNotes.setText(savedInstanceState.getString(STATE_RECHERCHE));
+            afficherArchives = savedInstanceState.getBoolean(STATE_ARCHIVE);
         }
 
         monBlocNotes = new BlocNotes(this);
@@ -161,6 +162,7 @@ public class MainActivity extends Activity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putString(STATE_RECHERCHE, editTexteRechercheNotes.getText().toString());
+        savedInstanceState.putBoolean(STATE_ARCHIVE, this.afficherArchives);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -168,6 +170,7 @@ public class MainActivity extends Activity {
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         editTexteRechercheNotes.setText(savedInstanceState.getString(STATE_RECHERCHE));
+        afficherArchives = savedInstanceState.getBoolean(STATE_ARCHIVE);
     }
 
     public void ajouterUneNote(View v){
