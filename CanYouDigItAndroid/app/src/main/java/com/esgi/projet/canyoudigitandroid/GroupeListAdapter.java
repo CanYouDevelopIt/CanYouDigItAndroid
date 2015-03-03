@@ -2,11 +2,13 @@ package com.esgi.projet.canyoudigitandroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -41,7 +43,7 @@ public class GroupeListAdapter extends ArrayAdapter<String> {
 
         // Lookup view for data population
         TextView tvGroupe = (TextView) convertView.findViewById(R.id.titreGroupe);
-        Button btnSupprimerGroupe = (Button) convertView.findViewById(R.id.supprimerGroupe);
+        ImageView btnSupprimerGroupe = (ImageView) convertView.findViewById(R.id.supprimerGroupe);
 
         tvGroupe.setText(groupe.toString());
 

@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -44,16 +48,18 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
 
         // Lookup view for data population
         TextView tvTitreNote = (TextView) convertView.findViewById(R.id.titreNote);
-        Button btnSupprimerNote = (Button) convertView.findViewById(R.id.supprimerNote);
-        Button btnArchiverNote = (Button) convertView.findViewById(R.id.archiverNote);
+        TextView tvDateNote = (TextView) convertView.findViewById(R.id.dateNote);
+        ImageView btnSupprimerNote = (ImageView) convertView.findViewById(R.id.supprimerNote);
+        ImageView btnArchiverNote = (ImageView) convertView.findViewById(R.id.archiverNote);
 
         if(note.getArchive()){
-            btnArchiverNote.setText(R.string.desarchiver);
+            btnArchiverNote.setImageResource(R.drawable.desarchiver);
         }else{
-            btnArchiverNote.setText(R.string.archiver);
+            btnArchiverNote.setImageResource(R.drawable.archiver);
         }
 
         tvTitreNote.setText(note.getTitre());
+        tvDateNote.setText(note.getDateModif());
         switch (note.getNiveauImportance()){
             case 0: convertView.setBackgroundResource(R.color.rouge); break;
             case 1: convertView.setBackgroundResource(R.color.orange); break;
@@ -62,7 +68,7 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
 
         }
 
-        tvTitreNote.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),NoteActivity.class);

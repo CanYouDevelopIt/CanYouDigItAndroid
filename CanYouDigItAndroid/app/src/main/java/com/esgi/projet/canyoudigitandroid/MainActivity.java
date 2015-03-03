@@ -2,6 +2,7 @@ package com.esgi.projet.canyoudigitandroid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -76,7 +78,7 @@ public class MainActivity extends Activity {
 
                 afficherArchives = false;
 
-                Button buttonAjouter = (Button) findViewById(R.id.ajouterNote);
+                ImageView buttonAjouter = (ImageView) findViewById(R.id.ajouterNote);
                 buttonAjouter.setVisibility(View.VISIBLE);
             }
         });
@@ -90,7 +92,7 @@ public class MainActivity extends Activity {
 
                 afficherArchives = true;
 
-                Button buttonAjouter = (Button) findViewById(R.id.ajouterNote);
+                ImageView buttonAjouter = (ImageView) findViewById(R.id.ajouterNote);
                 buttonAjouter.setVisibility(View.INVISIBLE);
             }
         });

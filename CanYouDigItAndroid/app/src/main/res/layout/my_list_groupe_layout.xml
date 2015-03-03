@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/list">
 
     <TextView
         android:id="@+id/titreGroupe"
@@ -10,10 +10,10 @@
         android:layout_weight="2"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <Button
+    <ImageView
         android:id="@+id/supprimerGroupe"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/supprimer"/>
+        android:layout_height="match_parent"
+        android:src="@drawable/supprimer"/>
 
 </LinearLayout>

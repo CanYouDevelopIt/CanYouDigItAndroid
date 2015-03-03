@@ -140,4 +140,10 @@ public class NoteActivity extends Activity{
 
         return listGroupes;
     }
+
+    public void parametrerGroupes(View v){
+        Intent intent = new Intent(this,ParametrageActivity.class);
+        startActivity(intent);
+    }
+
 }
