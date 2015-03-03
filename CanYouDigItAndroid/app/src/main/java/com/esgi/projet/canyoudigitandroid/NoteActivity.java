@@ -92,6 +92,8 @@ public class NoteActivity extends Activity{
 
     public void onBackPressed() {
 
+        boolean afficherArchives = false;
+
         String nomGroupe = "";
         if(groupe.getSelectedItem() != null && !groupe.getSelectedItem().toString().equals(getString(R.string.default_groupe_value))){
             nomGroupe = groupe.getSelectedItem().toString();
@@ -121,10 +123,12 @@ public class NoteActivity extends Activity{
                 noteActuelle.setGroupeNotes(nomGroupe);
                 noteActuelle.setDateModif(laDate);
                 monBlocNotes.updateNote(noteActuelle);
+                afficherArchives = noteActuelle.getArchive();
             }
         }
 
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("afficherArchives",afficherArchives);
         startActivity(intent);
     }
 

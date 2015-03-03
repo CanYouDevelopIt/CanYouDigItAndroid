@@ -78,6 +78,11 @@ public class BlocNotes implements Parcelable {
                 return n;
             }
         }
+        for(Note n: mesArchives){
+            if(n.getId() == idNote){
+                return n;
+            }
+        }
         return null;
     }
 

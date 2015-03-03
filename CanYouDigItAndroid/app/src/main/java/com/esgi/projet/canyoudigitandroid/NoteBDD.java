@@ -84,10 +84,16 @@ public class NoteBDD {
             archiveValue = 1;
         }
 
-        if(conditionOrderBy == "")
-            conditionOrderBy = COL_DATE_MODIF + " DESC";
-        else
-            conditionOrderBy += " DESC";
+        switch (conditionOrderBy){
+            case "date_modif":
+                conditionOrderBy += " DESC"; break;
+            case "titre":
+                conditionOrderBy += " ASC"; break;
+            case "niveau_importance":
+                conditionOrderBy += " ASC"; break;
+            default:
+                conditionOrderBy = COL_DATE_MODIF + " DESC"; break;
+        }
 
         if(conditionWhereGroupe != "")
             conditionWhere += " AND " + COL_GROUPE + "= '" + conditionWhereGroupe + "'";

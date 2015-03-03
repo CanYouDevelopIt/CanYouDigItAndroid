@@ -54,6 +54,10 @@ public class MainActivity extends Activity {
             afficherArchives = savedInstanceState.getBoolean(STATE_ARCHIVE);
         }
 
+        if(getIntent().hasExtra("afficherArchives")){
+            afficherArchives = getIntent().getBooleanExtra("afficherArchives",false);
+        }
+
         monBlocNotes = new BlocNotes(this);
 
         ArrayAdapter<String> groupeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item);
@@ -63,9 +67,9 @@ public class MainActivity extends Activity {
         trierParGroupe.setAdapter(groupeAdapter);
 
         if(afficherArchives){
-            nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes, monBlocNotes.getMesArchives());
+            nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes,monBlocNotes.getMesArchives());
         }else{
-            nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes, monBlocNotes.getMesNotes());
+            nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes,monBlocNotes.getMesNotes());
         }
         listNotes.setAdapter(nAdapter);
 
