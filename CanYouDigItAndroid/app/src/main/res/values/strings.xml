@@ -5,6 +5,13 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_parametrage">ParametrageActivity</string>
+    <string name="archives">Archives</string>
+    <string name="notes">Notes</string>
+    <string name="parametres">Paramètres</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="archiver">Archiver</string>
+    <string name="desarchiver">Désarchiver</string>
+    <string name="creer_groupe">Créer un groupe de notes :</string>
 
     <string-array name="array_trier">
         <item>Date</item>

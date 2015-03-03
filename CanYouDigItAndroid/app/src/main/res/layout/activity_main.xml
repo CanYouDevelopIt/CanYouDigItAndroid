@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/icone"/>
 
-            <TextView android:text="Can You Dig It ?"
+            <TextView android:text="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/title_activity"
@@ -32,7 +32,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paramètres"
+                android:text="@string/parametres"
                 android:id="@+id/parametreGroupes"
                 android:onClick="parametrerGroupes"
                 android:layout_alignParentRight="true"/>
@@ -92,7 +92,7 @@
             android:layout_marginTop="@dimen/margin_top_default">
 
             <Button
-            android:text="Notes"
+            android:text="@string/notes"
             android:id="@+id/afficherNotes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
 
 
             <Button
-            android:text="Archive"
+            android:text="@string/archives"
             android:id="@+id/afficherArchives"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

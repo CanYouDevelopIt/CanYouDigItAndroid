@@ -14,12 +14,12 @@
             android:id="@+id/supprimerNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Supprimer"/>
+            android:text="@string/supprimer"/>
 
         <Button
             android:id="@+id/archiverNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Archiver" />
+            android:text="@string/archiver" />
 
 </LinearLayout>

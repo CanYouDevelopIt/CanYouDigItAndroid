@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.esgi.projet.canyoudigitandroid.ParametrageActivity">
 
-    <TextView android:text="Paramétrage" android:layout_width="wrap_content"
+    <TextView android:text="@string/parametres" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Créer un groupe de notes :"
+        android:text="@string/creer_groupe"
         android:id="@+id/textCreerGroupeNotes"
         android:layout_below="@+id/titreParametrages"
         android:layout_alignParentLeft="true"

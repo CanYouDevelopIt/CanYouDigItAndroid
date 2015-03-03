@@ -48,9 +48,9 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
         Button btnArchiverNote = (Button) convertView.findViewById(R.id.archiverNote);
 
         if(note.getArchive()){
-            btnArchiverNote.setText("Désarchiver");
+            btnArchiverNote.setText(R.string.desarchiver);
         }else{
-            btnArchiverNote.setText("Archiver");
+            btnArchiverNote.setText(R.string.archiver);
         }
 
         tvTitreNote.setText(note.getTitre());
