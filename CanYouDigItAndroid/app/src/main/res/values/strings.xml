@@ -11,7 +11,7 @@
     <string name="supprimer">Supprimer</string>
     <string name="archiver">Archiver</string>
     <string name="desarchiver">Désarchiver</string>
-    <string name="creer_groupe">Créer un groupe de notes :</string>
+    <string name="creer_groupe">Créer une catégorie :</string>
 
     <string-array name="array_trier">
         <item>Date</item>
@@ -19,6 +19,9 @@
         <item>Importance</item>
     </string-array>
 
-    <string name="default_groupe_value">Sélectionner un groupe</string>
+    <string name="default_groupe_value">Sélectionner une catégorie</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

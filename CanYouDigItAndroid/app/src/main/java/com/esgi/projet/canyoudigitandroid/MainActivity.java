@@ -1,199 +1,85 @@
 package com.esgi.projet.canyoudigitandroid;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.media.Image;
+
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
 
-import org.w3c.dom.Text;
+import com.esgi.projet.canyoudigitandroid.fragment.MainFragment;
+import com.esgi.projet.canyoudigitandroid.fragment.NoteFragment;
+import com.esgi.projet.canyoudigitandroid.fragment.ParametreFragment;
+import com.esgi.projet.canyoudigitandroid.model.BlocNotes;
 
-import java.util.List;
+public class MainActivity extends FragmentActivity {
 
+    private static final String KEY_FRAGMENT = "FRAGMENT_KEY";
+    private String mFragment;
 
-public class MainActivity extends Activity {
-
-    private static final String TAG = "MainActivity";
-    private static final String STATE_BLOC_NOTES = "STATE_BLOC_NOTES";
-    private static final String STATE_RECHERCHE = "RECHERCHE";
-    private static final String STATE_ARCHIVE = "ARCHIVE";
-    private BlocNotes monBlocNotes;
-    private NoteListAdapter nAdapter;
-    private EditText editTexteRechercheNotes;
-    private Spinner trierParGroupe;
-    private Spinner trierParDefaut;
-    private boolean afficherArchives = false;
+    private final MainFragment mMainFragment = new MainFragment();
+    private final ParametreFragment mParametreFragment = new ParametreFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        FragmentManager fm = getFragmentManager();
+        fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                if(getFragmentManager().getBackStackEntryCount() == 0) finish();
+            }
+        });
 
-        ListView listNotes = (ListView) findViewById(R.id.listNote);
-        Button buttonAfficherNotes = (Button) findViewById(R.id.afficherNotes);
-        Button buttonAfficherArchives = (Button) findViewById(R.id.afficherArchives);
-
-        editTexteRechercheNotes = (EditText) findViewById(R.id.rechercheNote);
-        trierParGroupe = (Spinner) findViewById(R.id.spinnerTrierGroupe);
-        trierParDefaut = (Spinner) findViewById(R.id.spinnerTrier);
-
-        if(savedInstanceState != null){
-            editTexteRechercheNotes.setText(savedInstanceState.getString(STATE_RECHERCHE));
-            afficherArchives = savedInstanceState.getBoolean(STATE_ARCHIVE);
-        }
-
-        if(getIntent().hasExtra("afficherArchives")){
-            afficherArchives = getIntent().getBooleanExtra("afficherArchives",false);
-        }
-
-        monBlocNotes = new BlocNotes(this);
-
-        ArrayAdapter<String> groupeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item);
-        groupeAdapter.add(getString(R.string.default_groupe_value));
-        groupeAdapter.addAll(monBlocNotes.getMesGroupesNotes());
-        groupeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        trierParGroupe.setAdapter(groupeAdapter);
-
-        if(afficherArchives){
-            nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes,monBlocNotes.getMesArchives());
+        if (mFragment != null) {
+            if(mFragment.equals(mMainFragment.getClass().getSimpleName())){ showMainFragment();}
+            else if(mFragment.equals(mParametreFragment.getClass().getSimpleName())){showParametreFragment();}
+            else{showNoteFragment();}
         }else{
-            nAdapter = new NoteListAdapter(this, R.layout.my_list_note_layout, monBlocNotes,monBlocNotes.getMesNotes());
+            showMainFragment();
         }
-        listNotes.setAdapter(nAdapter);
-
-        buttonAfficherNotes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nAdapter.clear();
-                nAdapter.addAll(monBlocNotes.getMesNotes());
-                nAdapter.notifyDataSetChanged();
-
-                afficherArchives = false;
-
-                ImageView buttonAjouter = (ImageView) findViewById(R.id.ajouterNote);
-                buttonAjouter.setVisibility(View.VISIBLE);
-            }
-        });
-
-        buttonAfficherArchives.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nAdapter.clear();
-                nAdapter.addAll(monBlocNotes.getMesArchives());
-                nAdapter.notifyDataSetChanged();
-
-                afficherArchives = true;
-
-                ImageView buttonAjouter = (ImageView) findViewById(R.id.ajouterNote);
-                buttonAjouter.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        trierParDefaut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                trierListView();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        trierParGroupe.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                trierListView();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        editTexteRechercheNotes.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {trierListView();}
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
 
     }
 
-    public void trierListView(){
-        nAdapter.clear();
-
-        String conditionOrderBy = "";
-        String conditionWhereGroupe = "";
-        String conditionWhereRecherche = "";
-
-        switch (trierParDefaut.getSelectedItemPosition()){
-            case 0: conditionOrderBy = "date_modif"; break;
-            case 1: conditionOrderBy = "titre"; break;
-            case 2: conditionOrderBy ="niveau_importance"; break;
+    private void showFragment(final Fragment fragment) {
+        if (fragment == null) {
+            return;
         }
 
-        if (trierParGroupe.getSelectedItem() != null && !trierParGroupe.getSelectedItem().toString().equals(getString(R.string.default_groupe_value))){
-            conditionWhereGroupe = trierParGroupe.getSelectedItem().toString();
-        }
+        mFragment = fragment.getClass().getSimpleName();
 
-        conditionWhereRecherche = editTexteRechercheNotes.getText().toString();
+        final FragmentManager fm = getFragmentManager();
+        final FragmentTransaction ft = fm.beginTransaction();
 
-        monBlocNotes.selectFromNbdd(conditionOrderBy,conditionWhereGroupe,conditionWhereRecherche);
-
-        if (!afficherArchives)
-            nAdapter.addAll(monBlocNotes.getMesNotes());
-        else
-            nAdapter.addAll(monBlocNotes.getMesArchives());
-
-        nAdapter.notifyDataSetChanged();
+        //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        ft.replace(R.id.mainFrameActivty, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
+
+    public void showMainFragment(){
+        showFragment(this.mMainFragment);
+    }
+
+    public void showParametreFragment() {
+        showFragment(this.mParametreFragment);
+    }
+
+    public void showNoteFragment() { showFragment(new NoteFragment());}
+
+    public void ajouterUneNote(View v){ showFragment(new NoteFragment());}
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString(STATE_RECHERCHE, editTexteRechercheNotes.getText().toString());
-        savedInstanceState.putBoolean(STATE_ARCHIVE, this.afficherArchives);
-        super.onSaveInstanceState(savedInstanceState);
+    public void onBackPressed(){
+        if(getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        }else
+            super.onBackPressed();
     }
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        editTexteRechercheNotes.setText(savedInstanceState.getString(STATE_RECHERCHE));
-        afficherArchives = savedInstanceState.getBoolean(STATE_ARCHIVE);
-    }
-
-    public void ajouterUneNote(View v){
-        Intent intent = new Intent(this,NoteActivity.class);
-        startActivity(intent);
-    }
-
-    public void parametrerGroupes(View v){
-        Intent intent = new Intent(this,ParametrageActivity.class);
-        startActivity(intent);
-    }
-
-    public void onBackPressed() {
-        // Nous permet de quitter l'application correctement sans passer par des Activity édités précédemment
-        Intent a = new Intent(Intent.ACTION_MAIN);
-        a.addCategory(Intent.CATEGORY_HOME);
-        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(a);
-    }
 }

@@ -1,10 +1,12 @@
-package com.esgi.projet.canyoudigitandroid;
+package com.esgi.projet.canyoudigitandroid.model;
 
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
-import java.util.ArrayList;
+
+import com.esgi.projet.canyoudigitandroid.database.GroupeBDD;
+import com.esgi.projet.canyoudigitandroid.database.NoteBDD;
+
 import java.util.List;
 
 /**

@@ -1,4 +1,4 @@
-package com.esgi.projet.canyoudigitandroid;
+package com.esgi.projet.canyoudigitandroid.database;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,10 +1,12 @@
-package com.esgi.projet.canyoudigitandroid;
+package com.esgi.projet.canyoudigitandroid.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+
+import com.esgi.projet.canyoudigitandroid.database.MaBaseSQLite;
+import com.esgi.projet.canyoudigitandroid.model.Note;
 
 import java.util.ArrayList;
 import java.util.List;

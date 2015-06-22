@@ -1,15 +1,18 @@
-package com.esgi.projet.canyoudigitandroid;
+package com.esgi.projet.canyoudigitandroid.adapter;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.esgi.projet.canyoudigitandroid.R;
+import com.esgi.projet.canyoudigitandroid.model.BlocNotes;
 
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class GroupeListAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
 
         final String groupe = getItem(position);
 

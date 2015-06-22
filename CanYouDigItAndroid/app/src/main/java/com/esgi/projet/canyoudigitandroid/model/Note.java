@@ -1,10 +1,7 @@
-package com.esgi.projet.canyoudigitandroid;
+package com.esgi.projet.canyoudigitandroid.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.format.Time;
-
-import java.util.Date;
 
 /**
  * Created by Jkn1092 on 22/01/2015.

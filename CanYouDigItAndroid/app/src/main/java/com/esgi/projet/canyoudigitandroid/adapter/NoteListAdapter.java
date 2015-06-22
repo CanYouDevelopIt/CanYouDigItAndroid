@@ -1,20 +1,22 @@
-package com.esgi.projet.canyoudigitandroid;
+package com.esgi.projet.canyoudigitandroid.adapter;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.esgi.projet.canyoudigitandroid.R;
+import com.esgi.projet.canyoudigitandroid.fragment.NoteFragment;
+import com.esgi.projet.canyoudigitandroid.model.BlocNotes;
+import com.esgi.projet.canyoudigitandroid.model.Note;
 
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
 
         final Note note = getItem(position);
 
@@ -71,9 +73,19 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),NoteActivity.class);
-                intent.putExtra("idNote",note.getId());
-                getContext().startActivity(intent);
+
+                NoteFragment noteFragment = new NoteFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("idNote",note.getId());
+                noteFragment.setArguments(bundle);
+
+                final Context context = parent.getContext();
+                FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.mainFrameActivty, noteFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
             }
         });
 

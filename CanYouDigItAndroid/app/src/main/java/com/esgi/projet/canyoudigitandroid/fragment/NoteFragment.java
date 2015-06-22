@@ -1,29 +1,30 @@
-package com.esgi.projet.canyoudigitandroid;
+package com.esgi.projet.canyoudigitandroid.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.esgi.projet.canyoudigitandroid.R;
+import com.esgi.projet.canyoudigitandroid.model.BlocNotes;
+import com.esgi.projet.canyoudigitandroid.model.Note;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-//Wells
 
-public class NoteActivity extends Activity{
+
+public class NoteFragment extends Fragment {
 
     public BlocNotes monBlocNotes;
     public EditText nomTitre;
@@ -35,23 +36,26 @@ public class NoteActivity extends Activity{
     public Spinner groupe;
     public Boolean noteModifier;
 
+    public NoteFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        nomTitre = (EditText) findViewById(R.id.titreNote);
-        contenu = (EditText) findViewById(R.id.contenuNote);
-        date = (TextView) findViewById(R.id.dateNote);
-        importance = (Spinner) findViewById(R.id.spinner);
-        groupe = (Spinner) findViewById(R.id.groupeSpinner);
+        View rootView = inflater.inflate(R.layout.fragment_note, container, false);
 
+        nomTitre = (EditText) rootView.findViewById(R.id.titreNote);
+        contenu = (EditText) rootView.findViewById(R.id.contenuNote);
+        date = (TextView) rootView.findViewById(R.id.dateNote);
+        importance = (Spinner) rootView.findViewById(R.id.spinner);
+        groupe = (Spinner) rootView.findViewById(R.id.groupeSpinner);
 
-        monBlocNotes = new BlocNotes(this);
+        monBlocNotes = new BlocNotes(getActivity());
 
         // Chargement du spinner Importance
-        String[] niveauImportance = new String[] {"Très important","Important","Normal"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, niveauImportance);
+        String[] niveauImportance = new String[] {"Urgent","Important","Normal"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, niveauImportance);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         importance.setAdapter(adapter);
 
@@ -59,13 +63,15 @@ public class NoteActivity extends Activity{
         String defaultGroupeValue = getString(R.string.default_groupe_value);
         List<String> listGroupes = ajoutDefaultValueGroupe(defaultGroupeValue);
         String[] tableGroupes = listGroupes.toArray(new String[listGroupes.size()]);
-        ArrayAdapter<String> groupeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, tableGroupes);
+        ArrayAdapter<String> groupeAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, tableGroupes);
         groupeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         groupe.setAdapter(groupeAdapter);
 
-        if(getIntent().hasExtra("idNote")){
+        Bundle bundle = this.getArguments();
 
-            int idNote = getIntent().getIntExtra("idNote", -1);
+        if(bundle != null){
+
+            int idNote = bundle.getInt("idNote", -1);
             noteActuelle = monBlocNotes.getNoteById(idNote);
             nomTitre.setText(noteActuelle.getTitre());
             contenu.setText(noteActuelle.getContenu());
@@ -86,11 +92,22 @@ public class NoteActivity extends Activity{
             noteModifier = true;
         }
 
-        date.setText(laDate);
-
+        return rootView;
     }
 
-    public void onBackPressed() {
+    public List<String> ajoutDefaultValueGroupe(String defaultGroupeValue){
+
+        List<String> listGroupes = new ArrayList<String>();
+        if(!listGroupes.contains(defaultGroupeValue)){
+            listGroupes.add(defaultGroupeValue);
+        }
+        listGroupes.addAll(monBlocNotes.getMesGroupesNotes());
+
+        return listGroupes;
+    }
+
+    @Override
+    public void onDestroyView() {
 
         boolean afficherArchives = false;
 
@@ -127,27 +144,15 @@ public class NoteActivity extends Activity{
             }
         }
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("afficherArchives",afficherArchives);
-        startActivity(intent);
-    }
-
-    public List<String> ajoutDefaultValueGroupe(String defaultGroupeValue){
-
-        List<String> listGroupes = new ArrayList<String>();
-
-        if(!listGroupes.contains(defaultGroupeValue)){
-            listGroupes.add(defaultGroupeValue);
-        }
-
-        listGroupes.addAll(monBlocNotes.getMesGroupesNotes());
-
-        return listGroupes;
+        super.onDestroyView();
     }
 
     public void parametrerGroupes(View v){
-        Intent intent = new Intent(this,ParametrageActivity.class);
-        startActivity(intent);
+        ParametreFragment parametrerFragment = new ParametreFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.mainFrameActivty, parametrerFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
-
 }

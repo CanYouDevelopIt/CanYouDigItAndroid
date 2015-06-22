@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.esgi.projet.canyoudigitandroid.ParametrageActivity">
+    tools:context="com.oneplus.canyoudigitandroid.ParametrageFragment">
 
     <TextView android:text="@string/parametres" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,15 +34,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/ajouteGroupe"
-            android:hint="Saisir un groupe de notes" />
+            android:hint="Saisir une catégorie" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/nouveau"
-            android:id="@+id/ajoutGroupe"
-            android:onClick="createGroupe" />
+            android:id="@+id/imgAjouterGroupe"/>
 
     </LinearLayout>
 
