@@ -12,6 +12,12 @@
     <string name="archiver">Archiver</string>
     <string name="desarchiver">Désarchiver</string>
     <string name="creer_groupe">Créer une catégorie :</string>
+    <string name="popup_menu_edit">Edit</string>
+    <string name="popup_menu_modifier">Modifier :</string>
+    <string name="popup_menu_edition_reussi">Edition réussi</string>
+    <string name="popup_menu_edition_rate">Edition raté</string>
+    <string name="popup_menu_edition_cancel">annuler</string>
+    <string name="popup_menu_edition_valider">ok</string>
 
     <string-array name="array_trier">
         <item>Date</item>

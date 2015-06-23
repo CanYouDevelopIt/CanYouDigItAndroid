@@ -3,9 +3,11 @@ package com.esgi.projet.canyoudigitandroid.model;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.esgi.projet.canyoudigitandroid.database.GroupeBDD;
 import com.esgi.projet.canyoudigitandroid.database.NoteBDD;
+import com.esgi.projet.canyoudigitandroid.fragment.ParametreFragment;
 
 import java.util.List;
 
@@ -112,12 +114,35 @@ public class BlocNotes implements Parcelable {
     }
 
     public void ajouterGroupeNotes(String nomGroupe){
-        if(!mesGroupesNotes.contains(nomGroupe)) {
+        if(!mesGroupesNotes.contains(nomGroupe) && !nomGroupe.equals("")) {
             mesGroupesNotes.add(nomGroupe);
             gbdd.insertGroupe(nomGroupe);
         }
     }
 
+    public void modifyGroupe(int id,String oldGroupeName,String newGroupeName){
+        if(!mesGroupesNotes.contains(newGroupeName)) {
+            if(gbdd.modifyGroupe(oldGroupeName,newGroupeName)!=-1){
+                mesGroupesNotes.set(id,newGroupeName);
+                modifyGroupeNotes(oldGroupeName,newGroupeName);
+            }
+        }
+    }
+    public void modifyGroupeNotes(String oldGroupeName,String newGroupeName){
+        for(Note n: mesNotes){
+            if(n.getGroupeNotes().equals(oldGroupeName)){
+                n.setGroupeNotes(newGroupeName);
+            }
+            updateNote(n);
+        }
+
+        for(Note a: mesArchives){
+            if(a.getGroupeNotes().equals(oldGroupeName)){
+                a.setGroupeNotes(newGroupeName);
+            }
+            updateNote(a);
+        }
+    }
     public void supprimerGroupeNotes(String nomGroupe){
         mesGroupesNotes.remove(nomGroupe);
 

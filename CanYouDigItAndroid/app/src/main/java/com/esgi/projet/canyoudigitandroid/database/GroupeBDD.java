@@ -47,6 +47,16 @@ public class GroupeBDD {
         values.put(NOM_GROUPE,nomDuGroupe);
         return bdd.insert(TABLE_GROUPE, null, values);
     }
+    public long modifyGroupe(String oldGroupeName,String newGroupeName){
+        if(newGroupeName == null || newGroupeName.equals("")){
+            return -1;
+        }
+        open();
+        ContentValues values = new ContentValues();
+        values.put(NOM_GROUPE,newGroupeName);
+        String[] arguments = {oldGroupeName};
+        return bdd.update(TABLE_GROUPE,values, NOM_GROUPE +" = ? ", arguments);
+    }
     public List<String> getAllData(){
         open();
         String[] listeColonnes ={UID_GROUPE,NOM_GROUPE};
