@@ -1,14 +1,18 @@
 package com.esgi.projet.canyoudigitandroid.fragment;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -72,8 +76,6 @@ public class MainFragment extends Fragment {
             nAdapter = new NoteListAdapter(getActivity(), R.layout.my_list_note_layout, monBlocNotes,monBlocNotes.getMesNotes());
         }
         listNotes.setAdapter(nAdapter);
-
-        registerForContextMenu(listNotes);
 
         imageAfficherNotes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,13 +175,6 @@ public class MainFragment extends Fragment {
             nAdapter.addAll(monBlocNotes.getMesArchives());
 
         nAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
     }
 
     public void parametrerGroupes(View v){

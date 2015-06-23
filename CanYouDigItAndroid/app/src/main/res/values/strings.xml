@@ -18,6 +18,7 @@
     <string name="popup_menu_edition_rate">Edition raté</string>
     <string name="popup_menu_edition_cancel">annuler</string>
     <string name="popup_menu_edition_valider">ok</string>
+    <string name="popup_menu_dupliquer">Dupliquer</string>
 
     <string-array name="array_trier">
         <item>Date</item>

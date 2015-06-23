@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -18,6 +19,8 @@ import com.esgi.projet.canyoudigitandroid.R;
 import com.esgi.projet.canyoudigitandroid.fragment.NoteFragment;
 import com.esgi.projet.canyoudigitandroid.model.BlocNotes;
 import com.esgi.projet.canyoudigitandroid.model.Note;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -51,6 +54,7 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
 
         TextView tvTitreNote = (TextView) convertView.findViewById(R.id.titreNote);
         TextView tvDateNote = (TextView) convertView.findViewById(R.id.dateNote);
+        ImageView btnDupliquerNote = (ImageView) convertView.findViewById(R.id.dupliquerNote);
         ImageView btnSupprimerNote = (ImageView) convertView.findViewById(R.id.supprimerNote);
         ImageView btnArchiverNote = (ImageView) convertView.findViewById(R.id.archiverNote);
 
@@ -115,7 +119,20 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
             }
         });
 
-        // Return the completed view to render on screen
+        btnDupliquerNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Note nouvelleNote = new Note(note.getTitre(), note.getContenu(), note.getNiveauImportance(), note.getDateModif(), note.getGroupeNotes());
+                if(note.getArchive()){
+                    monBlocNotes.ajouterArchive(nouvelleNote);
+                }else{
+                    monBlocNotes.ajouterNote(nouvelleNote);
+                }
+                items.add(nouvelleNote);
+                notifyDataSetChanged();
+            }
+        });
+
         return convertView;
     }
 
