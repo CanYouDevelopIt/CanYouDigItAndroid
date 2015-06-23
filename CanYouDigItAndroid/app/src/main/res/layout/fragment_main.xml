@@ -90,17 +90,17 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/margin_top_default">
 
-            <Button
-                android:text="@string/notes"
+            <ImageView
                 android:id="@+id/afficherNotes"
+                android:src="@drawable/desarchiver"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
 
-            <Button
-                android:text="@string/archives"
+            <ImageView
                 android:id="@+id/afficherArchives"
+                android:src="@drawable/archiver"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>

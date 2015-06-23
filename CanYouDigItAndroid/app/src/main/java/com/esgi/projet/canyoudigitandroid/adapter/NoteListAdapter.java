@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -48,7 +49,6 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.my_list_note_layout, parent, false);
         }
 
-        // Lookup view for data population
         TextView tvTitreNote = (TextView) convertView.findViewById(R.id.titreNote);
         TextView tvDateNote = (TextView) convertView.findViewById(R.id.dateNote);
         ImageView btnSupprimerNote = (ImageView) convertView.findViewById(R.id.supprimerNote);

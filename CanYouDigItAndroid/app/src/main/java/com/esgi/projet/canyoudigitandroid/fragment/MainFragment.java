@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -43,8 +45,8 @@ public class MainFragment extends Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         ListView listNotes = (ListView) rootView.findViewById(R.id.listNote);
-        Button buttonAfficherNotes = (Button) rootView.findViewById(R.id.afficherNotes);
-        Button buttonAfficherArchives = (Button) rootView.findViewById(R.id.afficherArchives);
+        ImageView imageAfficherNotes = (ImageView) rootView.findViewById(R.id.afficherNotes);
+        ImageView imageAfficherArchives = (ImageView) rootView.findViewById(R.id.afficherArchives);
         View imgParametre = (View) rootView.findViewById(R.id.parametreGroupes);
 
         editTexteRechercheNotes = (EditText) rootView.findViewById(R.id.rechercheNote);
@@ -71,7 +73,9 @@ public class MainFragment extends Fragment {
         }
         listNotes.setAdapter(nAdapter);
 
-        buttonAfficherNotes.setOnClickListener(new View.OnClickListener() {
+        registerForContextMenu(listNotes);
+
+        imageAfficherNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 nAdapter.clear();
@@ -85,7 +89,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        buttonAfficherArchives.setOnClickListener(new View.OnClickListener() {
+        imageAfficherArchives.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 nAdapter.clear();
@@ -169,6 +173,13 @@ public class MainFragment extends Fragment {
             nAdapter.addAll(monBlocNotes.getMesArchives());
 
         nAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
     }
 
     public void parametrerGroupes(View v){
