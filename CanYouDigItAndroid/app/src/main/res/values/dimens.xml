@@ -7,4 +7,6 @@
     <dimen name="list">33dp</dimen>
     <dimen name="margin_top_from_title">30dp</dimen>
     <dimen name="margin_top_default">10dp</dimen>
+    <dimen name="corner_radius">4dp</dimen>
+    <dimen name="layer_padding">3dp</dimen>
 </resources>

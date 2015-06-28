@@ -55,9 +55,11 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/groupeSpinner"
+        android:layout_marginTop="@dimen/margin_top_default"
         android:id="@+id/dthRappel"
         android:text="Ajouter un rappel"
-        android:layout_below="@+id/groupeSpinner"
-        android:layout_marginTop="@dimen/margin_top_default"/>
+        android:background="@drawable/flat_selector"
+        android:textColor="@android:color/white"/>
 
 </RelativeLayout>

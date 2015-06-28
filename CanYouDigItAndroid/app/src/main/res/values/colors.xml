@@ -4,4 +4,8 @@
     <color name="orange">#FFA700</color>
     <color name="bleu">#F3E2A9</color>
     <color name="gris_clair">#A4A4A4</color>
+    <color name="blue_pressed">@android:color/holo_blue_dark</color>
+    <color name="blue_normal">@android:color/holo_blue_light</color>
+    <color name="holo_blue_dark">#ff0099cc</color>
+    <color name="holo_blue_light">#ff33b5e5</color>
 </resources>
