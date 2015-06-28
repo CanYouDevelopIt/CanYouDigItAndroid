@@ -1,21 +1,28 @@
 package com.esgi.projet.canyoudigitandroid;
 
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 
+import com.esgi.projet.canyoudigitandroid.database.MaBaseSQLite;
 import com.esgi.projet.canyoudigitandroid.fragment.MainFragment;
 import com.esgi.projet.canyoudigitandroid.fragment.NoteFragment;
 import com.esgi.projet.canyoudigitandroid.fragment.ParametreFragment;
 import com.esgi.projet.canyoudigitandroid.model.BlocNotes;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
 
     private static final String KEY_FRAGMENT = "FRAGMENT_KEY";
     private String mFragment;
@@ -44,6 +51,25 @@ public class MainActivity extends FragmentActivity {
             showMainFragment();
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                showParametreFragment();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void showFragment(final Fragment fragment) {

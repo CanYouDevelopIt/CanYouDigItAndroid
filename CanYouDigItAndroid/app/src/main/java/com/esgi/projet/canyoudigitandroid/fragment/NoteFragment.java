@@ -1,18 +1,24 @@
 package com.esgi.projet.canyoudigitandroid.fragment;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esgi.projet.canyoudigitandroid.R;
 import com.esgi.projet.canyoudigitandroid.model.BlocNotes;
@@ -20,6 +26,7 @@ import com.esgi.projet.canyoudigitandroid.model.Note;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +42,7 @@ public class NoteFragment extends Fragment {
     public Note noteActuelle;
     public Spinner groupe;
     public Boolean noteModifier;
+    public Button rappel;
 
     public NoteFragment() {
         // Required empty public constructor
@@ -50,6 +58,15 @@ public class NoteFragment extends Fragment {
         date = (TextView) rootView.findViewById(R.id.dateNote);
         importance = (Spinner) rootView.findViewById(R.id.spinner);
         groupe = (Spinner) rootView.findViewById(R.id.groupeSpinner);
+        rappel = (Button) rootView.findViewById(R.id.dthRappel);
+
+        rappel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datePickerFragment = new DatePickerFragment();
+                datePickerFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
 
         monBlocNotes = new BlocNotes(getActivity());
 
@@ -84,6 +101,7 @@ public class NoteFragment extends Fragment {
             }
 
             laDate = noteActuelle.getDateModif();
+            Log.i("laDate", laDate);
             noteModifier = false;
         }else{
             Date theDate = new Date();
@@ -91,7 +109,7 @@ public class NoteFragment extends Fragment {
             laDate = sdf.format(theDate);
             noteModifier = true;
         }
-
+        date.setText(laDate);
         return rootView;
     }
 
@@ -131,7 +149,7 @@ public class NoteFragment extends Fragment {
 
         if(!nomTitre.getText().toString().equals("")) {
             if(noteActuelle == null) {
-                noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,nomGroupe);
+                noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,nomGroupe,"");
                 monBlocNotes.ajouterNote(noteActuelle);
             }else{
                 noteActuelle.setTitre(nomTitre.getText().toString());

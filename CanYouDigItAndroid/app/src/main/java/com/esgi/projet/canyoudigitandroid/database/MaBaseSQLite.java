@@ -20,14 +20,15 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
     private static final String COL_DATE_MODIF = "date_modif";
     private static final String COL_GROUPE = "groupe";
     private static final String COL_ARCHIVE = "archive";
+    private static final String COL_DTH_RAPPEL = "dth_rappel";
 
     private static final String CREATE_BDD = "CREATE TABLE " + TABLE_NOTES + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_TITRE + " TEXT NOT NULL, "
             + COL_CONTENU + " TEXT NOT NULL, " + COL_NIVEAU_IMPORTANCE + " INTEGER NOT NULL, "
-            + COL_DATE_MODIF + " TEXT NOT NULL, " + COL_GROUPE + " TEXT, " + COL_ARCHIVE + " BOOLEAN);";
+            + COL_DATE_MODIF + " TEXT NOT NULL, " + COL_GROUPE + " TEXT, " + COL_ARCHIVE + " BOOLEAN, " + COL_DTH_RAPPEL + " TEXT);";
 
     // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    private static final int VERSION_BDD = 2;
+    private static final int VERSION_BDD = 3;
     private static final String NOM_BDD = "notes.db";
     // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     // Données de la table GROUPE

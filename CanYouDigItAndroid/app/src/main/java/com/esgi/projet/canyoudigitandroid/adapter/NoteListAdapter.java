@@ -122,7 +122,7 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
         btnDupliquerNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Note nouvelleNote = new Note(note.getTitre(), note.getContenu(), note.getNiveauImportance(), note.getDateModif(), note.getGroupeNotes());
+                Note nouvelleNote = new Note(note.getTitre(), note.getContenu(), note.getNiveauImportance(), note.getDateModif(), note.getGroupeNotes(), note.getDthRappel());
                 if(note.getArchive()){
                     monBlocNotes.ajouterArchive(nouvelleNote);
                 }else{

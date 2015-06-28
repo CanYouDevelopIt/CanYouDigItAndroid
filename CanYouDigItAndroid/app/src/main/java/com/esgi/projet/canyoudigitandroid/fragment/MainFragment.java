@@ -51,7 +51,6 @@ public class MainFragment extends Fragment {
         ListView listNotes = (ListView) rootView.findViewById(R.id.listNote);
         ImageView imageAfficherNotes = (ImageView) rootView.findViewById(R.id.afficherNotes);
         ImageView imageAfficherArchives = (ImageView) rootView.findViewById(R.id.afficherArchives);
-        View imgParametre = (View) rootView.findViewById(R.id.parametreGroupes);
 
         editTexteRechercheNotes = (EditText) rootView.findViewById(R.id.rechercheNote);
         trierParGroupe = (Spinner) rootView.findViewById(R.id.spinnerTrierGroupe);
@@ -136,13 +135,6 @@ public class MainFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {}
-        });
-
-        imgParametre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parametrerGroupes(rootView);
-            }
         });
 
         return rootView;

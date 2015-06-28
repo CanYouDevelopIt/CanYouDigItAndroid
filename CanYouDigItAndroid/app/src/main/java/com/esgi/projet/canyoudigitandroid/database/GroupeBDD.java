@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class GroupeBDD {
 
-    private static final int VERSION_BDD = 2;
+    private static final int VERSION_BDD = 3;
     private static final String NOM_BDD = "notes.db";
 
     private static final String TABLE_GROUPE = "table_groupe";

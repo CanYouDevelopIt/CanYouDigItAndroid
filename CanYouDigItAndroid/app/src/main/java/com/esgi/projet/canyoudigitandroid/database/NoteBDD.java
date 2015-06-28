@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class NoteBDD {
 
-    private static final int VERSION_BDD = 2;
+    private static final int VERSION_BDD = 3;
     private static final String NOM_BDD = "notes.db";
 
     private static final String TABLE_NOTES = "table_notes";
@@ -27,6 +27,7 @@ public class NoteBDD {
     private static final String COL_DATE_MODIF = "date_modif";
     private static final String COL_GROUPE = "groupe";
     private static final String COL_ARCHIVE = "archive";
+    private static final String COL_DTH_RAPPEL = "dth_rappel";
 
     private SQLiteDatabase bdd;
 
@@ -56,6 +57,7 @@ public class NoteBDD {
         values.put(COL_DATE_MODIF, n.getDateModif());
         values.put(COL_GROUPE, n.getGroupeNotes());
         values.put(COL_ARCHIVE, n.getArchive());
+        values.put(COL_DTH_RAPPEL, n.getDthRappel());
         return bdd.insert(TABLE_NOTES, null, values);
     }
 
@@ -67,6 +69,7 @@ public class NoteBDD {
         values.put(COL_DATE_MODIF, n.getDateModif());
         values.put(COL_GROUPE, n.getGroupeNotes());
         values.put(COL_ARCHIVE, n.getArchive());
+        values.put(COL_DTH_RAPPEL, n.getDthRappel());
         return bdd.update(TABLE_NOTES, values, COL_ID + " = " + n.getId(), null);
     }
 
@@ -104,7 +107,7 @@ public class NoteBDD {
             conditionWhere += " AND " + COL_TITRE + " LIKE '%" + conditionWhereRecherche + "%'";
 
         open();
-        String[] listeColonnes ={COL_ID,COL_TITRE,COL_CONTENU,COL_NIVEAU_IMPORTANCE,COL_DATE_MODIF,COL_GROUPE};
+        String[] listeColonnes ={COL_ID,COL_TITRE,COL_CONTENU,COL_NIVEAU_IMPORTANCE,COL_DATE_MODIF,COL_GROUPE,COL_DTH_RAPPEL};
         Cursor cursor = bdd.query(TABLE_NOTES,listeColonnes,COL_ARCHIVE+"= "+archiveValue + conditionWhere,null,null,null,conditionOrderBy);
 
         while(cursor.moveToNext()){
@@ -127,7 +130,10 @@ public class NoteBDD {
             int colIndexGroupe = cursor.getColumnIndex(COL_GROUPE);
             String colGroupe = cursor.getString(colIndexGroupe);
 
-            Note n = new Note(colID,colTitre,colContenu,colNiveau,colDateModif,colGroupe,archive);
+            int colIndexDthRappel = cursor.getColumnIndex(COL_DTH_RAPPEL);
+            String colDthRappel = cursor.getString(colIndexDthRappel);
+
+            Note n = new Note(colID,colTitre,colContenu,colNiveau,colDateModif,colGroupe,archive,colDthRappel);
             mesNotes.add(n);
         }
 

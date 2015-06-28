@@ -16,23 +16,26 @@ public class Note implements Parcelable {
     private String dateModif;
     private String groupeNotes;
     private boolean archive;
+    private String dthRappel;
 
-    public Note(String _titre, String _contenu, int _niveauImportance, String _date, String _groupeNotes) {
+    public Note(String _titre, String _contenu, int _niveauImportance, String _date, String _groupeNotes, String _dthRappel) {
         titre = _titre;
         contenu = _contenu;
         niveauImportance = _niveauImportance;
         groupeNotes = _groupeNotes;
         dateModif = _date;
+        dthRappel = _dthRappel;
         archive = false;
     }
 
-    public Note(int _id, String _titre, String _contenu, int _niveauImportance, String _date, String _groupeNotes, boolean _archive) {
+    public Note(int _id, String _titre, String _contenu, int _niveauImportance, String _date, String _groupeNotes, boolean _archive, String _dthRappel) {
         id = _id;
         titre = _titre;
         contenu = _contenu;
         niveauImportance = _niveauImportance;
         groupeNotes = _groupeNotes;
         dateModif = _date;
+        dthRappel = _dthRappel;
         archive = _archive;
     }
 
@@ -96,6 +99,10 @@ public class Note implements Parcelable {
 
     public void setId(int id) { this.id = id;  }
 
+    public String getDthRappel(){ return dthRappel; }
+
+    public void setDthRappel(String _dthRappel){ this.dthRappel = _dthRappel;}
+
     public boolean equals(Object n){
         if(n instanceof Note){
             if(titre == ((Note) n).getTitre()){
@@ -119,7 +126,7 @@ public class Note implements Parcelable {
         dest.writeInt(niveauImportance);
         dest.writeString(dateModif);
         dest.writeString(groupeNotes);
-
+        dest.writeString(dthRappel);
     }
 
     public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>()
