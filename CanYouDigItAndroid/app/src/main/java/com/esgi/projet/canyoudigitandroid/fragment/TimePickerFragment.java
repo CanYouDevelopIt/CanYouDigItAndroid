@@ -42,7 +42,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         else
             minuteChaine = "0" + Integer.toString(minute);
 
-        dth += " " + hourChaine + "h" + minuteChaine;
+        dth += " " + hourChaine + ":" + minuteChaine;
         ((Button) getActivity().findViewById(R.id.dthRappel)).setText(dth);
     }
 

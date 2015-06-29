@@ -38,7 +38,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         else
             monthChaine = "0" + Integer.toString(month);
 
-        String dth = dayChaine + "/" + monthChaine + "/" + year;
+        String dth = year + "/" + monthChaine + "/" + dayChaine;
 
         DialogFragment timePickerFragment = new TimePickerFragment();
         timePickerFragment.show(getFragmentManager(), "timePicker");

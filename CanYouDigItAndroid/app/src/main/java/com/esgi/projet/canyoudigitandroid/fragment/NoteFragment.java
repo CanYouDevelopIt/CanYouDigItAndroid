@@ -24,6 +24,7 @@ import com.esgi.projet.canyoudigitandroid.R;
 import com.esgi.projet.canyoudigitandroid.model.BlocNotes;
 import com.esgi.projet.canyoudigitandroid.model.Note;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -99,9 +100,17 @@ public class NoteFragment extends Fragment {
                     break;
                 }
             }
-
             laDate = noteActuelle.getDateModif();
-            Log.i("laDate", laDate);
+
+            if(noteActuelle.getDthRappel() != ""){
+                try {
+                    Date dthRappel = new SimpleDateFormat("yyyyMMddHHmm").parse(noteActuelle.getDthRappel());
+                    rappel.setText(new SimpleDateFormat("yyyy/MM/dd HH:mm").format(dthRappel));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
             noteModifier = false;
         }else{
             Date theDate = new Date();
@@ -130,6 +139,18 @@ public class NoteFragment extends Fragment {
         boolean afficherArchives = false;
 
         String nomGroupe = "";
+        String dthRappel = "";
+
+        if(rappel.getText() != "AJOUTER UN RAPPEL"){
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("yyyy/MM/dd HH:mm").parse((String) rappel.getText());
+                dthRappel = new SimpleDateFormat("yyyyMMddHHmm").format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         if(groupe.getSelectedItem() != null && !groupe.getSelectedItem().toString().equals(getString(R.string.default_groupe_value))){
             nomGroupe = groupe.getSelectedItem().toString();
         }
@@ -149,7 +170,7 @@ public class NoteFragment extends Fragment {
 
         if(!nomTitre.getText().toString().equals("")) {
             if(noteActuelle == null) {
-                noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,nomGroupe,"");
+                noteActuelle = new Note(nomTitre.getText().toString(), contenu.getText().toString(), importance.getSelectedItemPosition(), laDate,nomGroupe,dthRappel);
                 monBlocNotes.ajouterNote(noteActuelle);
             }else{
                 noteActuelle.setTitre(nomTitre.getText().toString());
@@ -157,6 +178,7 @@ public class NoteFragment extends Fragment {
                 noteActuelle.setNiveauImportance(importance.getSelectedItemPosition());
                 noteActuelle.setGroupeNotes(nomGroupe);
                 noteActuelle.setDateModif(laDate);
+                noteActuelle.setDthRappel(dthRappel);
                 monBlocNotes.updateNote(noteActuelle);
                 afficherArchives = noteActuelle.getArchive();
             }
