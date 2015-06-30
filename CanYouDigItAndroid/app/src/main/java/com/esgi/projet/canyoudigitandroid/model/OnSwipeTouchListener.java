@@ -14,7 +14,6 @@ public class OnSwipeTouchListener implements OnTouchListener {
 
     private final GestureDetector gestureDetector;
 
-
     public OnSwipeTouchListener(Context ctx){
         gestureDetector = new GestureDetector(ctx, new GestureListener());
     }
@@ -53,8 +52,11 @@ public class OnSwipeTouchListener implements OnTouchListener {
                     }else{
                         onSwipeTop();
                     }
+                    result = true;
+                }else{
+                    onClick();
+                    result = true;
                 }
-                result = true;
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -79,5 +81,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
 
     public void onSwipeBottom(){
     }
+
+    public void onClick(){}
 
 }

@@ -72,41 +72,9 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
             case 0: convertView.setBackgroundResource(R.color.rouge); break;
             case 1: convertView.setBackgroundResource(R.color.orange); break;
             case 2: convertView.setBackgroundResource(R.color.bleu); break;
-
-
         }
 
-        convertView.setOnTouchListener(new OnSwipeTouchListener(getContext()){
-            public void onSwipeTop(){
-                Toast.makeText(getContext(),"top",Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeRight(){
-                Toast.makeText(getContext(),"Supprimer",Toast.LENGTH_SHORT).show();
-                if(note.getArchive()){
-                    monBlocNotes.supprimerArchive(note);
-                }else{
-                    monBlocNotes.supprimerNote(note);
-                }
-                items.remove(note);
-                notifyDataSetChanged();
-            }
-            public void onSwipeLeft(){
-                if(note.getArchive()){
-                    monBlocNotes.archiveToNote(note);
-                    Toast.makeText(getContext(),"Désarchiver",Toast.LENGTH_SHORT).show();
-                }else{
-                    monBlocNotes.ajouterArchive(note);
-                    Toast.makeText(getContext(),"Archiver",Toast.LENGTH_SHORT).show();
-                }
-                items.remove(note);
-                notifyDataSetChanged();
-            }
-            public void onSwipeBottom(){
-                Toast.makeText(getContext(),"bottom",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        convertView.setOnClickListener(new View.OnClickListener() {
+       convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
