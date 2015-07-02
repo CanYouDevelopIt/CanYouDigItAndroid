@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rechercheNote"
-                android:hint="Rechercher une note"/>
+                android:hint="@string/recherche_note"/>
 
             <ImageView
                 android:layout_width="wrap_content"

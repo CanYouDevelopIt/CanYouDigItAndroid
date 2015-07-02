@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Can You Dig It ?</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Parametres</string>
+    <string name="title_activity_parametrage">ParametrageActivity</string>
+    <string name="archives">Archives</string>
+    <string name="notes">Notes</string>
+    <string name="parametres">Paramètres</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="archiver">Archiver</string>
+    <string name="desarchiver">Désarchiver</string>
+    <string name="creer_groupe">Créer une catégorie :</string>
+    <string name="popup_menu_edit">Edit</string>
+    <string name="popup_menu_modifier">Modifier :</string>
+    <string name="popup_menu_edition_reussi">Edition réussi</string>
+    <string name="popup_menu_edition_rate">Edition raté</string>
+    <string name="popup_menu_edition_cancel">annuler</string>
+    <string name="popup_menu_edition_valider">ok</string>
+    <string name="popup_menu_dupliquer">Dupliquer</string>
+    <string name="recherche_note">Rechercher une note</string>
+    <string name="saisir_categorie">Saisir une catégorie</string>
+
+    <string-array name="array_trier">
+        <item>Date</item>
+        <item>Titre</item>
+        <item>Importance</item>
+    </string-array>
+
+    <string-array name="language">
+        <item>Anglais</item>
+        <item>Français</item>
+    </string-array>
+
+    <string name="default_groupe_value">Sélectionner une catégorie</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

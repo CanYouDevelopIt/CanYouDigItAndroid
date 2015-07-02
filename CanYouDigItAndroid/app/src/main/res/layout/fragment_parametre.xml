@@ -13,28 +13,28 @@
         android:textSize="@dimen/title_activity"
         android:id="@+id/titreParametrages" />
 
-    <TextView
+    <Spinner
+        android:id="@+id/spinnerLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/creer_groupe"
-        android:id="@+id/textCreerGroupeNotes"
         android:layout_below="@+id/titreParametrages"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="@dimen/margin_top_from_title" />
+        android:layout_marginTop="@dimen/margin_top_from_title"
+        android:entries="@array/language"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layoutGroupe"
         android:orientation="horizontal"
-        android:layout_below="@+id/textCreerGroupeNotes">
+        android:layout_below="@+id/spinnerLanguage"
+        android:layout_marginTop="@dimen/margin_top_from_title">
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/ajouteGroupe"
-            android:hint="Saisir une catégorie" />
+            android:hint="@string/saisir_categorie" />
 
         <ImageView
             android:layout_width="wrap_content"

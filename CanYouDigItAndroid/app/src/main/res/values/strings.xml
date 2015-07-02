@@ -7,26 +7,33 @@
     <string name="title_activity_parametrage">ParametrageActivity</string>
     <string name="archives">Archives</string>
     <string name="notes">Notes</string>
-    <string name="parametres">Paramètres</string>
-    <string name="supprimer">Supprimer</string>
-    <string name="archiver">Archiver</string>
-    <string name="desarchiver">Désarchiver</string>
-    <string name="creer_groupe">Créer une catégorie :</string>
+    <string name="parametres">Settings</string>
+    <string name="supprimer">Delete</string>
+    <string name="archiver">Archive</string>
+    <string name="desarchiver">Unpack</string>
+    <string name="creer_groupe">Create category :</string>
     <string name="popup_menu_edit">Edit</string>
-    <string name="popup_menu_modifier">Modifier :</string>
-    <string name="popup_menu_edition_reussi">Edition réussi</string>
-    <string name="popup_menu_edition_rate">Edition raté</string>
-    <string name="popup_menu_edition_cancel">annuler</string>
-    <string name="popup_menu_edition_valider">ok</string>
-    <string name="popup_menu_dupliquer">Dupliquer</string>
+    <string name="popup_menu_modifier">Edit :</string>
+    <string name="popup_menu_edition_reussi">Edition managed</string>
+    <string name="popup_menu_edition_rate">Edition missed</string>
+    <string name="popup_menu_edition_cancel">Cancel</string>
+    <string name="popup_menu_edition_valider">OK</string>
+    <string name="popup_menu_dupliquer">Duplicate</string>
+    <string name="recherche_note">Research a note</string>
+    <string name="saisir_categorie">Enter a category</string>
 
     <string-array name="array_trier">
         <item>Date</item>
-        <item>Titre</item>
+        <item>Title</item>
         <item>Importance</item>
     </string-array>
 
-    <string name="default_groupe_value">Sélectionner une catégorie</string>
+    <string-array name="language">
+        <item>English</item>
+        <item>French</item>
+    </string-array>
+
+    <string name="default_groupe_value">Select category</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

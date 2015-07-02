@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.esgi.projet.canyoudigitandroid.adapter.GroupeListAdapter;
@@ -43,6 +44,14 @@ public class ParametreFragment extends Fragment {
         listLayoutGroupe = (ListView) view.findViewById(R.id.listGroupes);
         groupeToAdd   = (EditText) view.findViewById(R.id.ajouteGroupe);
         ImageView imageCreerGroupe = (ImageView) view.findViewById(R.id.imgAjouterGroupe);
+        final Spinner spinnerLangage = (Spinner) view.findViewById(R.id.spinnerLanguage);
+
+        spinnerLangage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //spinnerLangage.getSelectedItem();
+            }
+        });
 
         imageCreerGroupe.setOnClickListener(new View.OnClickListener() {
             @Override
