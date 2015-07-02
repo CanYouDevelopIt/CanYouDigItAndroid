@@ -3,6 +3,7 @@ package com.esgi.projet.canyoudigitandroid.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.esgi.projet.canyoudigitandroid.model.BlocNotes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ParametreFragment extends Fragment {
 
@@ -46,23 +48,39 @@ public class ParametreFragment extends Fragment {
         ImageView imageCreerGroupe = (ImageView) view.findViewById(R.id.imgAjouterGroupe);
         final Spinner spinnerLangage = (Spinner) view.findViewById(R.id.spinnerLanguage);
 
-        spinnerLangage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //spinnerLangage.getSelectedItem();
-            }
-        });
+        spinnerLangage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 1){
+                    Locale locale = new Locale("fr");
+                    Locale.setDefault(locale);
+                    Configuration config = new Configuration();
+                    config.locale = locale;
+                    getActivity().getApplicationContext().getResources().updateConfiguration(config, null);
+                }else{
+                    Locale locale = new Locale("");
+                    Locale.setDefault(locale);
+                    Configuration config = new Configuration();
+                    config.locale = locale;
+                    getActivity().getApplicationContext().getResources().updateConfiguration(config, null);
+                }
+             }
+             @Override
+             public void onNothingSelected(AdapterView<?> parent) {
 
-        imageCreerGroupe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String newGroupe = groupeToAdd.getText().toString();
-                groupeToAdd.setText("");
-                monBlocNotes.ajouterGroupeNotes(newGroupe);
-                gAdapter = new GroupeListAdapter(getActivity(), R.layout.my_list_note_layout, monBlocNotes, monBlocNotes.getMesGroupesNotes());
-                gAdapter.notifyDataSetChanged();
-            }
-        });
+             }
+         });
+
+                imageCreerGroupe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String newGroupe = groupeToAdd.getText().toString();
+                        groupeToAdd.setText("");
+                        monBlocNotes.ajouterGroupeNotes(newGroupe);
+                        gAdapter = new GroupeListAdapter(getActivity(), R.layout.my_list_note_layout, monBlocNotes, monBlocNotes.getMesGroupesNotes());
+                        gAdapter.notifyDataSetChanged();
+                    }
+                });
 
         gAdapter = new GroupeListAdapter(getActivity(), R.layout.my_list_note_layout, monBlocNotes, monBlocNotes.getMesGroupesNotes());
         listLayoutGroupe.setAdapter(gAdapter);
