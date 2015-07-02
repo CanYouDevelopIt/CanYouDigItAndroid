@@ -2,11 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.esgi.projet.canyoudigitandroid" >
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icone"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <receiver android:process=":remote" android:name="com.esgi.projet.canyoudigitandroid.receiver.AlarmReceiver"></receiver>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -24,5 +30,6 @@
             android:label="@string/title_activity_parametrage" >
         </activity>
     </application>
+
 
 </manifest>
