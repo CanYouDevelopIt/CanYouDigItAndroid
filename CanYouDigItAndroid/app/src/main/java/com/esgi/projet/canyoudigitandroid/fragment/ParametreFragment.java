@@ -141,7 +141,6 @@ public class ParametreFragment extends Fragment {
         return true;
     }
 
-
     public void showToastMessage(String message){
         Context context = getActivity().getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
