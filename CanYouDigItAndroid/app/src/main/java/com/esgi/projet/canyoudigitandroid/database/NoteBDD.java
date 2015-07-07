@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.esgi.projet.canyoudigitandroid.database.MaBaseSQLite;
 import com.esgi.projet.canyoudigitandroid.model.Note;
@@ -138,6 +139,11 @@ public class NoteBDD {
         }
 
         return mesNotes;
+    }
+
+    public SQLiteDatabase getMyReadableDatabase(){
+        Log.v("export", "Récuperation readable databsae");
+        return maBaseSQLite.getReadableDatabase();
     }
 
 }

@@ -22,6 +22,17 @@
     <string name="recherche_note">Rechercher une note</string>
     <string name="saisir_categorie">Saisir une catégorie</string>
 
+    <string name="note_archiver">Ajouté aux archives</string>
+    <string name="note_desarchiver">Note enlevé des archives</string>
+    <string name="note_supprimer">Note supprimé</string>
+
+    <string name="action_parametres">Paramètres</string>
+    <string name="action_export">Exporter notes</string>
+    <string name="action_import">Importer notes</string>
+
+    <string name="import_success">Import réussi</string>
+    <string name="export_success">Export réussi</string>
+
     <string-array name="array_trier">
         <item>Date</item>
         <item>Titre</item>

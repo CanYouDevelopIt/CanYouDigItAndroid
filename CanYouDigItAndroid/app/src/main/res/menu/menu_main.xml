@@ -1,6 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/action_settings" android:title="@string/parametres"
-        android:icon="@drawable/parametres" android:orderInCategory="100" app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_parametres"
+        android:title="@string/action_parametres"
+        android:icon="@drawable/parametres"/>
+
+    <item android:id="@+id/action_export"
+        android:title="@string/action_export"/>
+
+    <item android:id="@+id/action_import"
+        android:title="@string/action_import"/>
+
+
 </menu>

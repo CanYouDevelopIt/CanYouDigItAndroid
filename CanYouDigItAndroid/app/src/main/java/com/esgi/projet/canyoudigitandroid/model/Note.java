@@ -18,6 +18,10 @@ public class Note implements Parcelable {
     private boolean archive;
     private String dthRappel;
 
+
+    public Note() {
+
+    }
     public Note(String _titre, String _contenu, int _niveauImportance, String _date, String _groupeNotes, String _dthRappel) {
         titre = _titre;
         contenu = _contenu;
@@ -110,6 +114,10 @@ public class Note implements Parcelable {
             }
         }
         return false;
+    }
+
+    public String toString(){
+        return "Note ["+id+", "+titre+", "+contenu+", "+niveauImportance+", "+dateModif+", "+groupeNotes+", "+archive+", "+dthRappel+"]";
     }
 
     @Override

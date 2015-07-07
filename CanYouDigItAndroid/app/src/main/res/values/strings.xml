@@ -22,6 +22,18 @@
     <string name="recherche_note">Research a note</string>
     <string name="saisir_categorie">Enter a category</string>
 
+
+    <string name="note_archiver">Added to archive</string>
+    <string name="note_desarchiver">Removed from archive</string>
+    <string name="note_supprimer">Note deleted</string>
+
+    <string name="action_parametres">Settings</string>
+    <string name="action_export">Export notes</string>
+    <string name="action_import">Import notes</string>
+
+    <string name="import_success">The import is a success</string>
+    <string name="export_success">The export is a success</string>
+
     <string-array name="array_trier">
         <item>Date</item>
         <item>Title</item>

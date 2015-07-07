@@ -5,7 +5,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.esgi.projet.canyoudigitandroid.database.ExportNotes;
 import com.esgi.projet.canyoudigitandroid.database.GroupeBDD;
+import com.esgi.projet.canyoudigitandroid.database.ImportNotes;
 import com.esgi.projet.canyoudigitandroid.database.NoteBDD;
 import com.esgi.projet.canyoudigitandroid.fragment.ParametreFragment;
 
@@ -168,6 +170,15 @@ public class BlocNotes implements Parcelable {
         mesArchives = nbdd.getMesNotes(true,conditionOrderBy,conditionWhereGroupe, conditionWhereRecherche);
     }
 
+    public void exportNotes(String fileDirectory){
+        Log.v("export","Export dans BlocNotes");
+        ExportNotes exportNotes = new ExportNotes(fileDirectory,nbdd.getMyReadableDatabase());
+    }
+
+    public void importNotes(String importFileDirectory) {
+        ImportNotes importNotes = new ImportNotes(importFileDirectory,this);
+    }
+
     @Override
     public int describeContents()
     {
@@ -196,5 +207,4 @@ public class BlocNotes implements Parcelable {
             return new BlocNotes[size];
         }
     };
-
 }
