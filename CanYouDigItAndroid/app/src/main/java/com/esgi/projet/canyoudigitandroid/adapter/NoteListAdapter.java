@@ -25,6 +25,8 @@ import com.esgi.projet.canyoudigitandroid.model.OnSwipeTouchListener;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,12 +62,12 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
         ImageView btnDupliquerNote = (ImageView) convertView.findViewById(R.id.dupliquerNote);
         ImageView btnSupprimerNote = (ImageView) convertView.findViewById(R.id.supprimerNote);
         ImageView btnArchiverNote = (ImageView) convertView.findViewById(R.id.archiverNote);
-        ImageView bthRappel = (ImageView) convertView.findViewById(R.id.rappelNote);
+        ImageView btnRappel = (ImageView) convertView.findViewById(R.id.rappelNote);
 
         if(!note.getDthRappel().equals("")) {
-            bthRappel.setVisibility(View.VISIBLE);
+            btnRappel.setVisibility(View.VISIBLE);
         }else{
-            bthRappel.setVisibility(View.GONE);
+            btnRappel.setVisibility(View.GONE);
         }
         if(note.getArchive()){
          btnArchiverNote.setImageResource(R.drawable.desarchiver);
@@ -157,13 +159,27 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
             @Override
             public void onClick(View v) {
                 Note nouvelleNote = new Note(note.getTitre(), note.getContenu(), note.getNiveauImportance(), note.getDateModif(), note.getGroupeNotes(), note.getDthRappel());
-                if(note.getArchive()){
+                if(nouvelleNote.getArchive()){
                     monBlocNotes.ajouterArchive(nouvelleNote);
                 }else{
                     monBlocNotes.ajouterNote(nouvelleNote);
                 }
                 items.add(nouvelleNote);
                 notifyDataSetChanged();
+            }
+        });
+
+        btnRappel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                long dth = Long.parseLong(note.getDthRappel());
+                dth += 1000000;
+                Date dthRappel = new SimpleDateFormat("yyyyMMddHHmm").parse(Long.toString(dth));
+                Toast.makeText(v.getContext(), new SimpleDateFormat("yyyy/MM/dd HH:mm").format(dthRappel), Toast.LENGTH_SHORT).show();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 

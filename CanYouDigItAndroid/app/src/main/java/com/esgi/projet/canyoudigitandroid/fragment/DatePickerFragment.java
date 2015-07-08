@@ -27,7 +27,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
         String dayChaine;
         String monthChaine;
-
+        month++;
         if(day > 9)
             dayChaine = Integer.toString(day);
         else
@@ -37,7 +37,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             monthChaine = Integer.toString(month);
         else
             monthChaine = "0" + Integer.toString(month);
-
+        month--;
         String dth = year + "/" + monthChaine + "/" + dayChaine;
         TimePickerFragment t = new TimePickerFragment();
         t.year = year;

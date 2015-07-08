@@ -104,7 +104,9 @@ public class NoteFragment extends Fragment {
 
             if(noteActuelle.getDthRappel() != ""){
                 try {
-                    Date dthRappel = new SimpleDateFormat("yyyyMMddHHmm").parse(noteActuelle.getDthRappel());
+                    long dth = Long.parseLong(noteActuelle.getDthRappel());
+                    dth += 1000000;
+                    Date dthRappel = new SimpleDateFormat("yyyyMMddHHmm").parse(Long.toString(dth));
                     rappel.setText(new SimpleDateFormat("yyyy/MM/dd HH:mm").format(dthRappel));
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -146,6 +148,10 @@ public class NoteFragment extends Fragment {
             try {
                 date = new SimpleDateFormat("yyyy/MM/dd HH:mm").parse((String) rappel.getText());
                 dthRappel = new SimpleDateFormat("yyyyMMddHHmm").format(date);
+
+                long dth = Long.parseLong(dthRappel);
+                dth -= 1000000;
+                dthRappel = Long.toString(dth);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
