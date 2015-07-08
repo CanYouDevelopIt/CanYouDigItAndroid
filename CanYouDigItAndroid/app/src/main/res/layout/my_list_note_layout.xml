@@ -40,16 +40,16 @@
         android:layout_height="match_parent"
         android:src="@drawable/dupliquer"/>
 
-        <!--ImageView
+        <ImageView
             android:id="@+id/supprimerNote"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/supprimer"/-->
+            android:src="@drawable/supprimer"/>
 
-        <!--ImageView
+        <ImageView
             android:id="@+id/archiverNote"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/archiver" /-->
+            android:src="@drawable/archiver" />
 
 </LinearLayout>

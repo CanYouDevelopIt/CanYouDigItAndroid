@@ -58,8 +58,8 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
         TextView tvTitreNote = (TextView) convertView.findViewById(R.id.titreNote);
         TextView tvDateNote = (TextView) convertView.findViewById(R.id.dateNote);
         ImageView btnDupliquerNote = (ImageView) convertView.findViewById(R.id.dupliquerNote);
-        //ImageView btnSupprimerNote = (ImageView) convertView.findViewById(R.id.supprimerNote);
-        //ImageView btnArchiverNote = (ImageView) convertView.findViewById(R.id.archiverNote);
+        ImageView btnSupprimerNote = (ImageView) convertView.findViewById(R.id.supprimerNote);
+        ImageView btnArchiverNote = (ImageView) convertView.findViewById(R.id.archiverNote);
         ImageView bthRappel = (ImageView) convertView.findViewById(R.id.rappelNote);
 
         if(!note.getDthRappel().equals("")) {
@@ -67,11 +67,11 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
         }else{
             bthRappel.setVisibility(View.GONE);
         }
-        //if(note.getArchive()){
-        //  btnArchiverNote.setImageResource(R.drawable.desarchiver);
-        //}else{
-        //  btnArchiverNote.setImageResource(R.drawable.archiver);
-        //}
+        if(note.getArchive()){
+         btnArchiverNote.setImageResource(R.drawable.desarchiver);
+        }else{
+          btnArchiverNote.setImageResource(R.drawable.archiver);
+       }
 
         tvTitreNote.setText(note.getTitre());
         tvDateNote.setText(note.getDateModif());
@@ -127,7 +127,7 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
             }
         });
 
-        /*btnArchiverNote.setOnClickListener(new View.OnClickListener() {
+        btnArchiverNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(note.getArchive()){
@@ -138,9 +138,9 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
                 items.remove(note);
                 notifyDataSetChanged();
             }
-        });*/
+        });
 
-        /*btnSupprimerNote.setOnClickListener(new View.OnClickListener() {
+        btnSupprimerNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(note.getArchive()){
@@ -151,7 +151,7 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
                 items.remove(note);
                 notifyDataSetChanged();
             }
-        });*/
+        });
 
         btnDupliquerNote.setOnClickListener(new View.OnClickListener() {
             @Override
