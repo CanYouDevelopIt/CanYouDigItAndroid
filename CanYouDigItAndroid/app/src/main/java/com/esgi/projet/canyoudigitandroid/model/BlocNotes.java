@@ -70,7 +70,9 @@ public class BlocNotes implements Parcelable {
 
     public void ajouterNote(Note uneNote){
         mesNotes.add(uneNote);
-        nbdd.insertNote(uneNote);
+        long id = nbdd.insertNote(uneNote);
+        if (id >= Integer.MIN_VALUE || id <= Integer.MAX_VALUE)
+            uneNote.setId((int)id);
     }
 
     public void supprimerNote(Note uneNote){
