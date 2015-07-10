@@ -110,7 +110,9 @@ public class ImportNotes {
                                 }else if (columnName.equals("groupe")){
                                     uneNote.setGroupeNotes(text);
                                 }else if (columnName.equals("archive")){
-                                    uneNote.setArchive(Boolean.valueOf(text));
+                                    Log.v(TAG, "Archive "+text);
+                                    boolean isArchive = Integer.parseInt(text) == 1;
+                                    uneNote.setArchive(isArchive);
                                 }else if (columnName.equals("dth_rappel")){
                                     uneNote.setDthRappel(text);
                                 }
