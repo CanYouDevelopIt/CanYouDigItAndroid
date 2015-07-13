@@ -9,4 +9,6 @@
     <dimen name="margin_top_default">10dp</dimen>
     <dimen name="corner_radius">4dp</dimen>
     <dimen name="layer_padding">3dp</dimen>
+    <dimen name="margin_default">10dp</dimen>
+    <dimen name="padding_default">20dp</dimen>
 </resources>

@@ -32,7 +32,16 @@
     <string name="action_import">Import notes</string>
 
     <string name="import_success">The import is a success</string>
-    <string name="export_success">The export is a success</string>
+    <string name="export_success">The export is a success :</string>
+
+    <string name="import_fail">The import was not a success</string>
+    <string name="export_fail">The export was not a success</string>
+
+
+
+    <string name="dialog_parent_folder">Parent folder</string>
+    <string name="dialog_parent_yes_export">Export</string>
+    <string name="dialog_parent_no_export">Cancel</string>
 
     <string-array name="array_trier">
         <item>Date</item>

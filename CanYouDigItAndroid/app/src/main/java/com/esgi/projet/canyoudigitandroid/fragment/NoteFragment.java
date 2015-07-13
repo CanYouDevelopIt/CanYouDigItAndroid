@@ -101,14 +101,14 @@ public class NoteFragment extends Fragment {
                 }
             }
             laDate = noteActuelle.getDateModif();
-
-            if(noteActuelle.getDthRappel() != ""){
+            if(!noteActuelle.getDthRappel().equals("")){
                 try {
                     long dth = Long.parseLong(noteActuelle.getDthRappel());
                     dth += 1000000;
                     Date dthRappel = new SimpleDateFormat("yyyyMMddHHmm").parse(Long.toString(dth));
                     rappel.setText(new SimpleDateFormat("yyyy/MM/dd HH:mm").format(dthRappel));
                 } catch (ParseException e) {
+
                     e.printStackTrace();
                 }
             }

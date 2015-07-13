@@ -16,6 +16,7 @@ public class ExportNotes {
 
     private SQLiteDatabase  sdb;
 
+    private static final String TAG = "ExportNotes";
 
 
     private static final String CLOSING_WITH_TICK = "'>";
@@ -30,21 +31,19 @@ public class ExportNotes {
 
     private BufferedOutputStream mbufferos;
 
-
+    private boolean exportIsASuccess = true;
     public ExportNotes(String fileDirectory,SQLiteDatabase db){
-        Log.v("export", "Constructeur Export Notes");
         sdb = db;
-        File myFile = new File(fileDirectory+"/export.xml");
+        File myFile = new File(fileDirectory);
 
         try {
             myFile.createNewFile();
-            Log.v("export", "Absaloute path = " + myFile.getAbsolutePath());
-            Log.v("export", "Path = " + myFile.getPath());
             FileOutputStream fOut = new FileOutputStream(myFile);
             mbufferos = new BufferedOutputStream(fOut);
             exportData();
         } catch (IOException e) {
-            Log.v("export","Erreur dans ExportNotes");
+            Log.v(TAG,"Erreur dans xportNotes");
+            exportIsASuccess = false;
             e.printStackTrace();
         }
     }
@@ -74,11 +73,15 @@ public class ExportNotes {
             endDbExport();
             closeBuffer();
             }catch(IOException e){
-                e.printStackTrace();
+            Log.v(TAG,"Erreur lors du parsing.");
+            exportIsASuccess = false;
+            e.printStackTrace();
             }finally{
             try {
                 closeBuffer();
             } catch (IOException e) {
+                Log.v(TAG,"Erreur fermeture buffer");
+                exportIsASuccess = false;
                 e.printStackTrace();
             }
         }
@@ -87,6 +90,7 @@ public class ExportNotes {
     private void closeBuffer() throws IOException {
             if (mbufferos != null) {
                 mbufferos.close();
+                Log.v(TAG,"Fermeture buffer réussi.");
             }
     }
 
@@ -94,7 +98,6 @@ public class ExportNotes {
     private void exportTable(String tableName) throws IOException {
         startTable(tableName);
 
-        // get everything from the table
         String sql = "select * from " + tableName;
         Cursor cur = sdb.rawQuery(sql, new String[0]);
         int numcols = cur.getColumnCount();
@@ -125,36 +128,34 @@ public class ExportNotes {
 
     public void startDbExport(String dbName) throws IOException {
         String stg = START_DB + dbName + CLOSING_WITH_TICK;
-        Log.v("export",stg);
         mbufferos.write(stg.getBytes());
     }
     public void startTable(String tableName) throws IOException {
         String stg = START_TABLE + tableName + CLOSING_WITH_TICK;
-        Log.v("export",stg);
         mbufferos.write(stg.getBytes());
     }
 
     public void startRow() throws IOException {
-        Log.v("export",START_ROW);
         mbufferos.write(START_ROW.getBytes());
     }
 
     public void addColumn(String name, String val) throws IOException {
         String stg = START_COL + name + CLOSING_WITH_TICK + val + END_COL;
-        Log.v("export",stg);
         mbufferos.write(stg.getBytes());
     }
     public void endRow() throws IOException {
-        Log.v("export",END_ROW);
         mbufferos.write(END_ROW.getBytes());
     }
     public void endTable() throws IOException {
-        Log.v("export",END_TABLE);
         mbufferos.write(END_TABLE.getBytes());
     }
 
     public void endDbExport() throws IOException {
-        Log.v("export",END_TABLE);
         mbufferos.write(END_DB.getBytes());
     }
+
+    public boolean isExportASuccess(){
+        return exportIsASuccess;
+    }
+
 }

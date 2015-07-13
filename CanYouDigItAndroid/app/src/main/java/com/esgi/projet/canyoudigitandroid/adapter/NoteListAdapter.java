@@ -64,7 +64,7 @@ public class NoteListAdapter extends ArrayAdapter<Note> {
         ImageView btnArchiverNote = (ImageView) convertView.findViewById(R.id.archiverNote);
         ImageView btnRappel = (ImageView) convertView.findViewById(R.id.rappelNote);
 
-        if(!note.getDthRappel().equals("")) {
+        if(!note.getDthRappel().equals("") && note.getDthRappel().length() > 2) {
             btnRappel.setVisibility(View.VISIBLE);
         }else{
             btnRappel.setVisibility(View.GONE);

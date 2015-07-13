@@ -22,15 +22,35 @@ import java.util.List;
  */
 public class ImportNotes {
 
+    private static final String TABLE_NOTES = "table_notes";
+    private static final String COL_ID = "id";
+    private static final String COL_TITRE = "titre";
+    private static final String COL_CONTENU = "contenu";
+    private static final String COL_NIVEAU_IMPORTANCE = "niveau_importance";
+    private static final String COL_DATE_MODIF = "date_modif";
+    private static final String COL_GROUPE = "groupe";
+    private static final String COL_ARCHIVE = "archive";
+    private static final String COL_DTH_RAPPEL = "dth_rappel";
+
+
+    private static final String TABLE_GROUPE = "table_groupe";
+    private static final String UID_GROUPE = "_id";
+    private static final String NOM_GROUPE = "nom_groupe";
+
+
+    private static final String BALISE_XML_ROW = "row";
+    private static final String BALISE_XML_COL = "col";
+    private static final String BALISE_XML_TABLE = "table";
+
     private static final String TAG = "ImportNotes";
     private BlocNotes blocNotes;
+    private boolean importIsASuccess = true;
 
     public ImportNotes(String fileDirectory,BlocNotes _blocNotes){
 
         blocNotes = _blocNotes;
-        File myFile = new File(fileDirectory+"/export.xml");
+        File myFile = new File(fileDirectory);
         String path = myFile.getPath();
-        Log.v(TAG, "Path = " + path);
 
         InputStream inputStream = null;
 
@@ -38,13 +58,15 @@ public class ImportNotes {
             inputStream = new FileInputStream(path);
             parse(inputStream);
         } catch (FileNotFoundException e) {
-            Log.v(TAG, "Erreur import Notes");
+            importIsASuccess = false;
+            Log.v(TAG, "Erreur import avec l'inputsream Notes");
             e.printStackTrace();
         }finally {
             try {
                 inputStream.close();
             } catch (IOException e) {
-                Log.v(TAG, "Erreur Close InputStream Notes");
+                importIsASuccess = false;
+                Log.v(TAG, "Erreur lors de la fermeture  de l'InputStream Notes");
                 e.printStackTrace();
             }
         }
@@ -52,7 +74,7 @@ public class ImportNotes {
 
 
     public void parse(InputStream inputStream){
-        Log.v(TAG, "Parse import Notes");
+        Log.v(TAG, "Démarrage de l'import des Notes");
         XmlPullParserFactory factory = null;
         XmlPullParser parser = null;
 
@@ -63,7 +85,6 @@ public class ImportNotes {
             parser = factory.newPullParser();
             parser.setInput(inputStream,null);
 
-            String dbURL;
             String table = null;
             Note uneNote = null;
             String text = null;
@@ -73,18 +94,15 @@ public class ImportNotes {
                 String tagname = parser.getName();
                 switch (eventType){
                     case XmlPullParser.START_TAG:
-                        if(tagname.equalsIgnoreCase("export-database")){
-                            dbURL = parser.getAttributeValue(0);
-                        }
-                        if(tagname.equalsIgnoreCase("table")){
+                        if(tagname.equalsIgnoreCase(BALISE_XML_TABLE)){
                             table = parser.getAttributeValue(0);
                         }
-                        if(tagname.equalsIgnoreCase("row")){
-                            if(table.equals("table_notes")){
+                        if(tagname.equalsIgnoreCase(BALISE_XML_ROW)){
+                            if(table.equals(TABLE_NOTES)){
                                 uneNote = new Note();
                             }
                         }
-                        if(tagname.equalsIgnoreCase("col")){
+                        if(tagname.equalsIgnoreCase(BALISE_XML_COL)){
                             columnName = parser.getAttributeValue(0);
                         }
                         break;
@@ -92,44 +110,43 @@ public class ImportNotes {
                         text = parser.getText();
                         break;
                     case XmlPullParser.END_TAG:
-                        if(tagname.equalsIgnoreCase("col")){
+                        if(tagname.equalsIgnoreCase(BALISE_XML_COL)){
 
-                            if(table.equals("table_notes") && uneNote!=null){
-
-                                if(columnName.equals("id")){
+                            if(table.equals(TABLE_NOTES) && uneNote!=null){
+                                if(columnName.equals(COL_ID)){
                                     // Ici nous n'allons pas récupérer l'id
                                     //uneNote.setId(Integer.parseInt(text));
-                                }else if (columnName.equals("titre")){
+                                }else if (columnName.equals(COL_TITRE)){
                                     uneNote.setTitre(text);
-                                }else if (columnName.equals("contenu")){
+                                }else if (columnName.equals(COL_CONTENU)){
                                     uneNote.setContenu(text);
-                                }else if (columnName.equals("niveau_importance")){
+                                }else if (columnName.equals(COL_NIVEAU_IMPORTANCE)){
                                     uneNote.setNiveauImportance(Integer.parseInt(text));
-                                }else if (columnName.equals("date_modif")){
+                                }else if (columnName.equals(COL_DATE_MODIF)){
                                     uneNote.setDateModif(text);
-                                }else if (columnName.equals("groupe")){
+                                }else if (columnName.equals(COL_GROUPE)){
                                     uneNote.setGroupeNotes(text);
-                                }else if (columnName.equals("archive")){
-                                    Log.v(TAG, "Archive "+text);
+                                }else if (columnName.equals(COL_ARCHIVE)){
                                     boolean isArchive = Integer.parseInt(text) == 1;
                                     uneNote.setArchive(isArchive);
-                                }else if (columnName.equals("dth_rappel")){
+                                }else if (columnName.equals(COL_DTH_RAPPEL)){
                                     uneNote.setDthRappel(text);
                                 }
                             }
 
-                            if(table.equals("table_groupe")){
-                                if (columnName.equals("_id")){
+                            if(table.equals(TABLE_GROUPE)){
+                                if (columnName.equals(UID_GROUPE)){
                                     // pour le group pas besoin de récuperé l'id
-                                }else if (columnName.equals("nom_groupe")){
+                                }else if (columnName.equals(NOM_GROUPE)){
+                                    Log.v(TAG, "Ajout d'un nom de groupe à la BDD");
                                     blocNotes.ajouterGroupeNotes(text);
                                 }
                             }
                         }
                         // Fin d'une ligne - on ajoute la note dans la liste
-                        if(tagname.equalsIgnoreCase("row")) {
-                            if(uneNote !=null && table.equals("table_notes")){
-                                Log.v(TAG, "Une "+uneNote.toString());
+                        if(tagname.equalsIgnoreCase(BALISE_XML_ROW)) {
+                            if(uneNote !=null && table.equals(TABLE_NOTES)){
+                                Log.v(TAG, "Ajout d'une note à la BDD");
                                 blocNotes.ajouterNote(uneNote);
                             }
                         }
@@ -143,8 +160,12 @@ public class ImportNotes {
             }
 
         }catch(Exception e){
+            importIsASuccess = false;
             Log.v(TAG, "Erreur lors de l'import des notes.");
             e.printStackTrace();
         }
+    }
+    public boolean isImportASuccess(){
+        return importIsASuccess;
     }
 }

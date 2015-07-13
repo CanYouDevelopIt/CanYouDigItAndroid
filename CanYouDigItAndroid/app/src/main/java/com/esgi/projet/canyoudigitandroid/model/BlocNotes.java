@@ -1,10 +1,13 @@
 package com.esgi.projet.canyoudigitandroid.model;
 
 import android.content.Context;
+import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.esgi.projet.canyoudigitandroid.R;
 import com.esgi.projet.canyoudigitandroid.database.ExportNotes;
 import com.esgi.projet.canyoudigitandroid.database.GroupeBDD;
 import com.esgi.projet.canyoudigitandroid.database.ImportNotes;
@@ -172,13 +175,12 @@ public class BlocNotes implements Parcelable {
         mesArchives = nbdd.getMesNotes(true,conditionOrderBy,conditionWhereGroupe, conditionWhereRecherche);
     }
 
-    public void exportNotes(String fileDirectory){
-        Log.v("export","Export dans BlocNotes");
-        ExportNotes exportNotes = new ExportNotes(fileDirectory,nbdd.getMyReadableDatabase());
+    public boolean exportNotes(Context context,String fileDirectory){
+        return new ExportNotes(fileDirectory,nbdd.getMyReadableDatabase()).isExportASuccess();
     }
 
-    public void importNotes(String importFileDirectory) {
-        ImportNotes importNotes = new ImportNotes(importFileDirectory,this);
+    public boolean importNotes(String importFileDirectory) {
+        return new ImportNotes(importFileDirectory,this).isImportASuccess();
     }
 
     @Override
