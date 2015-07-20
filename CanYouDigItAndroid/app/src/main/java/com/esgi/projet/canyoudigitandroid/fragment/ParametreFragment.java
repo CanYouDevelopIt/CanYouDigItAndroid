@@ -35,6 +35,7 @@ public class ParametreFragment extends Fragment {
     private EditText groupeToAdd;
     private ListView listLayoutGroupe;
     private GroupeListAdapter gAdapter;
+    private Locale locale;
 
 
     @Override
@@ -46,30 +47,6 @@ public class ParametreFragment extends Fragment {
         listLayoutGroupe = (ListView) view.findViewById(R.id.listGroupes);
         groupeToAdd   = (EditText) view.findViewById(R.id.ajouteGroupe);
         ImageView imageCreerGroupe = (ImageView) view.findViewById(R.id.imgAjouterGroupe);
-        final Spinner spinnerLangage = (Spinner) view.findViewById(R.id.spinnerLanguage);
-
-        spinnerLangage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-             @Override
-             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 1){
-                    Locale locale = new Locale("fr");
-                    Locale.setDefault(locale);
-                    Configuration config = new Configuration();
-                    config.locale = locale;
-                    getActivity().getApplicationContext().getResources().updateConfiguration(config, null);
-                }else{
-                    Locale locale = new Locale("");
-                    Locale.setDefault(locale);
-                    Configuration config = new Configuration();
-                    config.locale = locale;
-                    getActivity().getApplicationContext().getResources().updateConfiguration(config, null);
-                }
-             }
-             @Override
-             public void onNothingSelected(AdapterView<?> parent) {
-
-             }
-         });
 
                 imageCreerGroupe.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -147,5 +124,4 @@ public class ParametreFragment extends Fragment {
         Toast toast = Toast.makeText(context, message, duration);
         toast.show();
     }
-
 }
